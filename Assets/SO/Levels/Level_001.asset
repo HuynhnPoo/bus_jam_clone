@@ -1,0 +1,218 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4a26d5607591f48a1dfc0595b11bb0, type: 3}
+  m_Name: Level_001
+  m_EditorClassIdentifier: 
+  width: 6
+  height: 6
+  cellSize: 2
+  spacing: 1
+  vehicles:
+  - vehicleId: 0
+    vehicleColor: {r: 1, g: 0.5, b: 0, a: 1}
+    capacity: 10
+    length: 3
+    gridPostion: {x: 3, y: 1, z: 0}
+    direction: 3
+  - vehicleId: 1
+    vehicleColor: {r: 1, g: 0, b: 0, a: 1}
+    capacity: 13
+    length: 2
+    gridPostion: {x: 3, y: 2, z: 0}
+    direction: 3
+  - vehicleId: 2
+    vehicleColor: {r: 0.6, g: 0, b: 1, a: 1}
+    capacity: 15
+    length: 2
+    gridPostion: {x: 4, y: 1, z: 0}
+    direction: 1
+  - vehicleId: 3
+    vehicleColor: {r: 1, g: 0, b: 0, a: 1}
+    capacity: 12
+    length: 2
+    gridPostion: {x: 5, y: 2, z: 0}
+    direction: 1
+  - vehicleId: 5
+    vehicleColor: {r: 0.6, g: 0, b: 1, a: 1}
+    capacity: 12
+    length: 2
+    gridPostion: {x: 1, y: 4, z: 0}
+    direction: 2
+  - vehicleId: 6
+    vehicleColor: {r: 1, g: 0, b: 1, a: 1}
+    capacity: 12
+    length: 2
+    gridPostion: {x: 0, y: 4, z: 0}
+    direction: 0
+  - vehicleId: 8
+    vehicleColor: {r: 1, g: 0, b: 0, a: 1}
+    capacity: 12
+    length: 2
+    gridPostion: {x: 4, y: 4, z: 0}
+    direction: 3
+  - vehicleId: 9
+    vehicleColor: {r: 1, g: 0, b: 0, a: 1}
+    capacity: 12
+    length: 2
+    gridPostion: {x: 4, y: 5, z: 0}
+    direction: 3
+  - vehicleId: 10
+    vehicleColor: {r: 1, g: 0, b: 0, a: 1}
+    capacity: 6
+    length: 2
+    gridPostion: {x: 3, y: 0, z: 0}
+    direction: 3
+  - vehicleId: 11
+    vehicleColor: {r: 1, g: 0, b: 0, a: 1}
+    capacity: 12
+    length: 2
+    gridPostion: {x: 2, y: 5, z: 0}
+    direction: 3
+  personGroups:
+  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 0
+  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+    Count: 4
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 0
+  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 0
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 4
+    slotPosition: {x: 6, y: 2, z: 0}
+    ownerVehicleId: 1
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 5
+    slotPosition: {x: 6, y: 2, z: 0}
+    ownerVehicleId: 1
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 4
+    slotPosition: {x: 6, y: 2, z: 0}
+    ownerVehicleId: 1
+  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+    Count: 4
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 2
+  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+    Count: 3
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 2
+  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+    Count: 5
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 2
+  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+    Count: 3
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 2
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 3
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 3
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 4
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 3
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 3
+  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+    Count: 3
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 5
+  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+    Count: 3
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 5
+  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+    Count: 4
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 5
+  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+    Count: 2
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 5
+  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+    Count: 5
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 6
+  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+    Count: 4
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 6
+  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+    Count: 3
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 6
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 5
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 8
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 8
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 4
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 8
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 9
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 5
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 9
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 4
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 9
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 4
+    slotPosition: {x: 6, y: 0, z: 0}
+    ownerVehicleId: 10
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: 6, y: 0, z: 0}
+    ownerVehicleId: 10
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: 6, y: 0, z: 0}
+    ownerVehicleId: 10
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 2
+    slotPosition: {x: 6, y: 0, z: 0}
+    ownerVehicleId: 10
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 4
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 11
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 5
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 11
+  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+    Count: 3
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 11
+  levelIndex: 1
+  difficultyScore: 108
