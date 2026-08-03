@@ -14,7 +14,7 @@ public class VehicleState
     public MoveDirection direction;
     public bool isActive;
 
-    public bool IsFull => currentOccupied > capacity;
+    public bool IsFull => currentOccupied >= capacity;
     public int AvailabeSeats => capacity - currentOccupied; // conf trong
 
     public void GotOnBus()

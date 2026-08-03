@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using System.Collections.Generic;
 
 [CustomEditor(typeof(LevelData))]
 public class LevelDataEditor : Editor
@@ -308,24 +309,56 @@ public class LevelDataEditor : Editor
 
         foreach (var v in data.vehicles)
         {
-            v.capacity =CalculateCapacity(v.length);
-            Vector3Int slot = GetWaitSlot(v, data.width);
-            int remaining = v.capacity;
+            v.capacity=CalculateCapacity(v.length); // capaja nhật theo từng sô lượng xe
+        }   
 
-            while (remaining > 0)
+        var colorGroup = data.vehicles
+            .GroupBy(v => v.vehicleColor)
+            .ToDictionary(k => k.Key, k => k.Sum(v => v.capacity));
+
+        List<PersonGroupData> tempGroups = new List<PersonGroupData>();
+
+        foreach (var colorPair in colorGroup)
+        {
+
+            Color currentColor = colorPair.Key; // mau xe
+            int totalCapacityColor = colorPair.Value; // toong số chỗ có lượng xe 
+
+            var sampleVehicle = data.vehicles.FirstOrDefault(v=>v.vehicleColor ==currentColor);
+            Vector3Int slot = sampleVehicle != null ? GetWaitSlot(sampleVehicle, data.width) : Vector3Int.zero;
+            int ownerId= sampleVehicle != null ? sampleVehicle.vehicleId : 0;
+
+            int reminingPeople = totalCapacityColor;
+            
+            while (reminingPeople > 0)
             {
-                int groupSize = Mathf.Min(Random.Range(3, 6), remaining);
-                data.personGroups.Add(new PersonGroupData
+                int groupPeolpleSize = reminingPeople>= 4?4: reminingPeople;
+
+                tempGroups.Add(new PersonGroupData
                 {
-                    colorPerson = v.vehicleColor,
-                    Count = groupSize,
+                    colorPerson = currentColor,
+                    Count = groupPeolpleSize,
                     slotPosition = slot,
-                    ownerVehicleId = v.vehicleId
+                    ownerVehicleId = ownerId
                 });
-                remaining -= groupSize;
+                reminingPeople -= groupPeolpleSize;
             }
         }
+        System.Random radom =new System.Random();
+        int n= tempGroups.Count;
+        while (n > 1) 
+        {
+            n--;
+            int k = radom.Next(n+1);
+            var value= tempGroups[k];
+            tempGroups[k] = tempGroups[n];
+            tempGroups[n]= value;
 
+        }
+
+        data.personGroups.AddRange(tempGroups);
+        int totalSeats = data.vehicles.Sum(v=> v.capacity);
+        int totalPeople = data.personGroups.Sum(p => p.Count);
         Debug.Log($"✅ Đã rebuild {data.personGroups.Count} nhóm người cho {data.vehicles.Count} xe.");
     }
     int CalculateCapacity(int length)

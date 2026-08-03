@@ -21,6 +21,7 @@ public static class GameMechanics
     //    this.slotOccupants = new GameObject[whiteSlots.Length];
     //}
 
+    // click di chuyển xe
     public static void ProcessVehicalClick(VehicleController vehicalController)
     {
         //  Debug.LogWarning("hien thi ra vehicle data" + vehicalController.vehicleData);
@@ -38,6 +39,7 @@ public static class GameMechanics
         }
     }
 
+    // thưc hien xe đến nơi 
     private static void MoveVehicleTween(VehicleController vehicle)
     {
         Board board = GameManager.Instance.gridManager.Board;
@@ -77,6 +79,7 @@ public static class GameMechanics
                 vehicle.transform.eulerAngles = new Vector3(0, 0, 90);
 
                 vehicle.CheckColorPeron(targetSlot); // kiểm tra người cùng mau không khi xe đến nơi đỗ
+               // vehicle.IsArrived = true;
             });
         }
         else
