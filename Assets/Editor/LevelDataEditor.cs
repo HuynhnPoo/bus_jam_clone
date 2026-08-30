@@ -72,7 +72,7 @@ public class LevelDataEditor : Editor
         // Giữ nguyên slider của bạn từ 2 đến 10
         data.cellSize = EditorGUILayout.Slider("Cell Size", data.cellSize, 0, 2);
         data.spacing = EditorGUILayout.Slider("Spacing", data.spacing, 0f, 4f);
-            EditorUtility.SetDirty(data);
+        EditorUtility.SetDirty(data);
 
         // Bảo vệ dữ liệu đầu vào
         float safeCellSize = data.cellSize > 0 ? data.cellSize : 4f;
@@ -107,14 +107,33 @@ public class LevelDataEditor : Editor
                 );
 
                 var vehicleHere = data.vehicles.FirstOrDefault(v => IsVehicleAtCell(v, new Vector3Int(x, y, 0)));
-                Color drawColor = vehicleHere != null ? vehicleHere.vehicleColor : new Color(0.2f, 0.2f, 0.2f);
+                if (vehicleHere != null)
+                {
+                    bool selected = vehicleHere.vehicleId == selectedVehicleId;
+
+                    DrawVehicleOutline(
+                        cellRect,
+                        selected ? Color.white : Color.gray,
+                        selected ? 3f : 2f
+                    );
+
+                    if (vehicleHere.gridPostion == new Vector3Int(x, y, 0))
+                    {
+                        GUI.Label(
+                            cellRect,
+                            $"#{vehicleHere.vehicleId}\n{GetDirectionSymbol(vehicleHere.direction)}",
+                            new GUIStyle(EditorStyles.boldLabel)
+                            {
+                                alignment = TextAnchor.MiddleCenter
+                            });
+                    }
+                }
 
                 // Vẽ viền trắng xung quanh ô được chọn
                 if (vehicleHere != null && vehicleHere.vehicleId == selectedVehicleId)
                     EditorGUI.DrawRect(new Rect(cellRect.x - 2, cellRect.y - 2, cellRect.width + 4, cellRect.height + 4), Color.white);
 
                 // Vẽ ô màu thực tế
-                EditorGUI.DrawRect(cellRect, drawColor);
 
                 // Xử lý sự kiện click chuột
                 if (e.type == EventType.MouseDown && cellRect.Contains(e.mousePosition))
@@ -140,6 +159,25 @@ public class LevelDataEditor : Editor
         else if (pendingNewVehicleCell.HasValue)
             DrawAddVehiclePanel(data);
     }
+
+    void DrawVehicleOutline(Rect rect, Color color, float thickness)
+    {
+        EditorGUI.DrawRect(
+            new Rect(rect.x, rect.y, rect.width, thickness),
+            color);
+
+        EditorGUI.DrawRect(
+            new Rect(rect.x, rect.yMax - thickness, rect.width, thickness),
+            color);
+
+        EditorGUI.DrawRect(
+            new Rect(rect.x, rect.y, thickness, rect.height),
+            color);
+
+        EditorGUI.DrawRect(
+            new Rect(rect.xMax - thickness, rect.y, thickness, rect.height),
+            color);
+    }
     void DrawAddVehiclePanel(LevelData data)
     {
         var cell = pendingNewVehicleCell.Value;
@@ -148,7 +186,7 @@ public class LevelDataEditor : Editor
 
         newVehicleColor = EditorGUILayout.ColorField("Màu", newVehicleColor);
         newVehicleLength = EditorGUILayout.IntSlider("Độ dài xe", newVehicleLength, 1, 3);
-        
+
         newVehicleCapacity = CalculateCapacity(newVehicleLength);
         EditorGUILayout.LabelField($"sức chưa :{newVehicleCapacity}");
         newVehicleDir = (MoveDirection)EditorGUILayout.EnumPopup("Hướng", newVehicleDir);
@@ -169,11 +207,11 @@ public class LevelDataEditor : Editor
             var newVehicle = new VehicleData
             {
                 vehicleId = newId,
-                vehicleColor = newVehicleColor,
                 capacity = newVehicleCapacity,
                 length = newVehicleLength,
                 gridPostion = cell,
                 direction = newVehicleDir
+       
             };
 
             data.vehicles.Add(newVehicle);
@@ -199,7 +237,6 @@ public class LevelDataEditor : Editor
         EditorGUILayout.Space(8);
         EditorGUILayout.LabelField($"Đang sửa xe #{v.vehicleId}", EditorStyles.boldLabel);
 
-        v.vehicleColor = EditorGUILayout.ColorField("Màu", v.vehicleColor);
         v.length = EditorGUILayout.IntSlider("Độ dài xe", v.length, 1, 3);
         v.direction = (MoveDirection)EditorGUILayout.EnumPopup("Hướng", v.direction);
 
@@ -289,81 +326,86 @@ public class LevelDataEditor : Editor
         RemovePersonGroupsAtSlot(data, v.vehicleId);
         v.capacity = CalculateCapacity(v.length);
 
+        int nextPersonId = v.vehicleId;
         int remaining = v.capacity;
         while (remaining > 0)
         {
-            int groupSize = Mathf.Min(Random.Range(2, 4), remaining);
+            int groupSize = Mathf.Min(Random.Range(4, 7), remaining);
             data.personGroups.Add(new PersonGroupData
             {
-                colorPerson = v.vehicleColor,
+                 groupPersonId = v.vehicleId,
                 Count = groupSize,
                 slotPosition = slot,
-                ownerVehicleId= v.vehicleId,
+                ownerVehicleId = v.vehicleId,
             });
             remaining -= groupSize;
         }
     }
     void RebuildAllPersonGroups(LevelData data)
     {
-        data.personGroups.Clear(); // xóa sạch dữ liệu cũ (có thể đang bị lỗi ownerVehicleId=0 hết)
+        // Xóa toàn bộ person cũ
+        data.personGroups.Clear();
+
+       // int currentPersonId = 0;
 
         foreach (var v in data.vehicles)
         {
-            v.capacity=CalculateCapacity(v.length); // capaja nhật theo từng sô lượng xe
-        }   
+            // Capacity phụ thuộc vào length
+            v.capacity = CalculateCapacity(v.length);
 
-        var colorGroup = data.vehicles
-            .GroupBy(v => v.vehicleColor)
-            .ToDictionary(k => k.Key, k => k.Sum(v => v.capacity));
+            // Vị trí người chờ của xe
+            Vector3Int waitSlot = GetWaitSlot(v, data.width);
 
-        List<PersonGroupData> tempGroups = new List<PersonGroupData>();
+            int remainingPeople = v.capacity;
 
-        foreach (var colorPair in colorGroup)
-        {
-
-            Color currentColor = colorPair.Key; // mau xe
-            int totalCapacityColor = colorPair.Value; // toong số chỗ có lượng xe 
-
-            var sampleVehicle = data.vehicles.FirstOrDefault(v=>v.vehicleColor ==currentColor);
-            Vector3Int slot = sampleVehicle != null ? GetWaitSlot(sampleVehicle, data.width) : Vector3Int.zero;
-            int ownerId= sampleVehicle != null ? sampleVehicle.vehicleId : 0;
-
-            int reminingPeople = totalCapacityColor;
-            
-            while (reminingPeople > 0)
+            while (remainingPeople > 0)
             {
-                int groupPeolpleSize = reminingPeople>= 4?4: reminingPeople;
+                int groupSize = Mathf.Min( Random.Range(4, 7),remainingPeople
+                );
 
-                tempGroups.Add(new PersonGroupData
+                data.personGroups.Add(new PersonGroupData
                 {
-                    colorPerson = currentColor,
-                    Count = groupPeolpleSize,
-                    slotPosition = slot,
-                    ownerVehicleId = ownerId
+                    groupPersonId = v.vehicleId,
+                    Count = groupSize,
+                    slotPosition = waitSlot,
+
+                    // Quan trọng:
+                    // Người này thuộc về xe nào
+                    ownerVehicleId = v.vehicleId
                 });
-                reminingPeople -= groupPeolpleSize;
+
+                remainingPeople -= groupSize;
             }
         }
-        System.Random radom =new System.Random();
-        int n= tempGroups.Count;
-        while (n > 1) 
-        {
-            n--;
-            int k = radom.Next(n+1);
-            var value= tempGroups[k];
-            tempGroups[k] = tempGroups[n];
-            tempGroups[n]= value;
 
-        }
+        EditorUtility.SetDirty(data);
 
-        data.personGroups.AddRange(tempGroups);
-        int totalSeats = data.vehicles.Sum(v=> v.capacity);
+        int totalSeats = data.vehicles.Sum(v => v.capacity);
         int totalPeople = data.personGroups.Sum(p => p.Count);
-        Debug.Log($"✅ Đã rebuild {data.personGroups.Count} nhóm người cho {data.vehicles.Count} xe.");
+
+        Debug.Log(
+            $"✅ Rebuild thành công!\n" +
+            $"Xe: {data.vehicles.Count}\n" +
+            $"Tổng chỗ: {totalSeats}\n" +
+            $"Tổng người: {totalPeople}\n" +
+            $"Số nhóm người: {data.personGroups.Count}"
+        );
     }
     int CalculateCapacity(int length)
     {
         // 1 ô -> 4 chỗ | 2 ô -> 6 chỗ | 3 ô -> 8 chỗ
         return (length * 2) + 2;
+    }
+
+    string GetDirectionSymbol(MoveDirection direction)
+    {
+        return direction switch
+        {
+            MoveDirection.Up => "↑",
+            MoveDirection.Down => "↓",
+            MoveDirection.Left => "←",
+            MoveDirection.Right => "→",
+            _ => "?"
+        };
     }
 }

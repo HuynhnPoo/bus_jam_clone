@@ -120,305 +120,381 @@ MonoBehaviour:
     gridPostion: {x: 5, y: 5, z: 0}
     direction: 3
   personGroups:
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 1
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 2
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 2
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     Count: 1
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
     Count: 2
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     Count: 1
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
     Count: 4
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
     Count: 1
     slotPosition: {x: 6, y: 1, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
     Count: 1
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 2
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 1, a: 1}
     Count: 2
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 1, b: 0, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 1, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 1, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 1, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 1, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 1, a: 1}
     Count: 1
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 3
     slotPosition: {x: -1, y: 3, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 1, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 4, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 1, a: 1}
     Count: 5
     slotPosition: {x: -1, y: 4, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 1, a: 1}
     Count: 2
     slotPosition: {x: -1, y: 4, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 4, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 4
     slotPosition: {x: -1, y: 4, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 2
     slotPosition: {x: -1, y: 4, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0, b: 0, a: 1}
     Count: 4
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
     Count: 4
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+  - personId: 0
+    colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 3
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 5
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
+  - personId: 0
+    colorPerson: {r: 0, g: 0, b: 1, a: 1}
     Count: 2
     slotPosition: {x: 6, y: 5, z: 0}
     ownerVehicleId: 0
   levelIndex: 1
+  time: 0
   difficultyScore: 360

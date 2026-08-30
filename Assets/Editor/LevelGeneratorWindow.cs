@@ -205,13 +205,28 @@ public class LevelGeneratorWindow : EditorWindow
                 );
 
                 var vehicleHere = data.vehicles.FirstOrDefault(v => IsVehicleAtCell(v, new Vector3Int(x, y, 0)));
-                Color drawColor = vehicleHere != null ? vehicleHere.vehicleColor : new Color(0.2f, 0.2f, 0.2f);
 
-                if (vehicleHere != null && vehicleHere.vehicleId == selectedVehicleId)
-                    EditorGUI.DrawRect(new Rect(cellRect.x - 2, cellRect.y - 2, cellRect.width + 4, cellRect.height + 4), Color.white);
+                if (vehicleHere != null)
+                {
+                    bool selected = vehicleHere.vehicleId == selectedVehicleId;
 
-                EditorGUI.DrawRect(cellRect, drawColor);
+                    DrawVehicleOutline(
+                        cellRect,
+                        selected ? Color.white : Color.gray,
+                        selected ? 3f : 2f
+                    );
 
+                    if (vehicleHere.gridPostion == new Vector3Int(x, y, 0))
+                    {
+                        GUI.Label(
+                            cellRect,
+                            $"#{vehicleHere.vehicleId}\n{GetDirectionSymbol(vehicleHere.direction)}",
+                            new GUIStyle(EditorStyles.boldLabel)
+                            {
+                                alignment = TextAnchor.MiddleCenter
+                            });
+                    }
+                }
                 if (e.type == EventType.MouseDown && cellRect.Contains(e.mousePosition))
                 {
                     if (vehicleHere != null)
@@ -232,6 +247,25 @@ public class LevelGeneratorWindow : EditorWindow
             DrawEditVehiclePanel(data);
         else if (pendingNewVehicleCell.HasValue)
             DrawAddVehiclePanel(data);
+    }
+
+    void DrawVehicleOutline(Rect rect, Color color, float thickness)
+    {
+        EditorGUI.DrawRect(
+            new Rect(rect.x, rect.y, rect.width, thickness),
+            color);
+
+        EditorGUI.DrawRect(
+            new Rect(rect.x, rect.yMax - thickness, rect.width, thickness),
+            color);
+
+        EditorGUI.DrawRect(
+            new Rect(rect.x, rect.y, thickness, rect.height),
+            color);
+
+        EditorGUI.DrawRect(
+            new Rect(rect.xMax - thickness, rect.y, thickness, rect.height),
+            color);
     }
     void DrawAddVehiclePanel(LevelData data)
     {
@@ -260,7 +294,6 @@ public class LevelGeneratorWindow : EditorWindow
             var newVehicle = new VehicleData
             {
                 vehicleId = newId,
-                vehicleColor = newVehicleColor,
                 capacity = newVehicleCapacity,
                 length = newVehicleLength,
                 gridPostion = cell,
@@ -289,7 +322,6 @@ public class LevelGeneratorWindow : EditorWindow
         EditorGUILayout.Space(8);
         EditorGUILayout.LabelField($"Đang sửa xe #{v.vehicleId}", EditorStyles.boldLabel);
 
-        v.vehicleColor = EditorGUILayout.ColorField("Màu", v.vehicleColor);
         v.capacity = EditorGUILayout.IntSlider("Sức chứa", v.capacity, 5, 20);
         v.length = EditorGUILayout.IntSlider("Độ dài xe", v.length, 1, 4);
         v.direction = (MoveDirection)EditorGUILayout.EnumPopup("Hướng", v.direction);
@@ -374,18 +406,33 @@ public class LevelGeneratorWindow : EditorWindow
         Vector3Int slot = GetWaitSlot(v, data.width);
         RemovePersonGroupsAtSlot(data, v.vehicleId);
 
+        int nextPersonId = data.personGroups.Count > 0
+       ? data.personGroups.Max(p => p.groupPersonId) + 1
+       : 0;
         int remaining = v.capacity;
         while (remaining > 0)
         {
             int groupSize = Mathf.Min(Random.Range(3, 6), remaining);
             data.personGroups.Add(new PersonGroupData
             {
-                colorPerson = v.vehicleColor,
+                groupPersonId =nextPersonId,
                 Count = groupSize,
                 slotPosition = slot,
                 ownerVehicleId = v.vehicleId
             });
             remaining -= groupSize;
         }
+    }
+
+    string GetDirectionSymbol(MoveDirection direction)
+    {
+        return direction switch
+        {
+            MoveDirection.Up => "↑",
+            MoveDirection.Down => "↓",
+            MoveDirection.Left => "←",
+            MoveDirection.Right => "→",
+            _ => "?"
+        };
     }
 }

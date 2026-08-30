@@ -19,5 +19,6 @@ public class LevelData : ScriptableObject
     public List<PersonGroupData> personGroups= new List<PersonGroupData>();
 
     public int levelIndex;
+    public int time;
     public int difficultyScore;
 }

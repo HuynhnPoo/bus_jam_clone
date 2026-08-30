@@ -18,251 +18,327 @@ MonoBehaviour:
   spacing: 0.2
   vehicles:
   - vehicleId: 0
-    vehicleColor: {r: 0, g: 0, b: 1, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 5, y: 0, z: 0}
     direction: 3
   - vehicleId: 1
-    vehicleColor: {r: 0, g: 1, b: 1, a: 1}
     capacity: 8
     length: 3
     gridPostion: {x: 4, y: 0, z: 0}
     direction: 3
   - vehicleId: 2
-    vehicleColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 1, y: 0, z: 0}
     direction: 2
   - vehicleId: 3
-    vehicleColor: {r: 1, g: 0.5, b: 0, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 0, y: 0, z: 0}
     direction: 2
   - vehicleId: 4
-    vehicleColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 5, y: 1, z: 0}
     direction: 3
   - vehicleId: 5
-    vehicleColor: {r: 0, g: 0, b: 1, a: 1}
     capacity: 8
     length: 3
     gridPostion: {x: 4, y: 1, z: 0}
     direction: 3
   - vehicleId: 6
-    vehicleColor: {r: 0.6, g: 0, b: 1, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 1, y: 1, z: 0}
     direction: 3
   - vehicleId: 7
-    vehicleColor: {r: 1, g: 0, b: 1, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 0, y: 1, z: 0}
-    direction: 3
+    direction: 2
   - vehicleId: 8
-    vehicleColor: {r: 0.6, g: 0, b: 1, a: 1}
     capacity: 8
     length: 3
     gridPostion: {x: 0, y: 2, z: 0}
     direction: 2
   - vehicleId: 9
-    vehicleColor: {r: 0.6, g: 0, b: 1, a: 1}
     capacity: 6
     length: 2
     gridPostion: {x: 3, y: 2, z: 0}
     direction: 2
   - vehicleId: 10
-    vehicleColor: {r: 1, g: 0, b: 1, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 5, y: 2, z: 0}
     direction: 2
   - vehicleId: 11
-    vehicleColor: {r: 1, g: 0, b: 0, a: 1}
     capacity: 8
     length: 3
     gridPostion: {x: 5, y: 3, z: 0}
     direction: 3
   - vehicleId: 12
-    vehicleColor: {r: 1, g: 0.5, b: 0, a: 1}
     capacity: 6
     length: 2
     gridPostion: {x: 2, y: 3, z: 0}
     direction: 3
   - vehicleId: 13
-    vehicleColor: {r: 1, g: 0.5, b: 0, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 0, y: 3, z: 0}
     direction: 3
   - vehicleId: 14
-    vehicleColor: {r: 0, g: 1, b: 1, a: 1}
     capacity: 8
     length: 3
     gridPostion: {x: 5, y: 4, z: 0}
     direction: 3
   - vehicleId: 15
-    vehicleColor: {r: 1, g: 0.5, b: 0, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 2, y: 4, z: 0}
     direction: 3
   - vehicleId: 16
-    vehicleColor: {r: 1, g: 0, b: 1, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 1, y: 4, z: 0}
     direction: 3
   - vehicleId: 17
-    vehicleColor: {r: 1, g: 0, b: 0, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 0, y: 4, z: 0}
     direction: 3
   - vehicleId: 18
-    vehicleColor: {r: 1, g: 0, b: 1, a: 1}
     capacity: 8
     length: 3
     gridPostion: {x: 0, y: 5, z: 0}
     direction: 2
   - vehicleId: 19
-    vehicleColor: {r: 0, g: 1, b: 0, a: 1}
     capacity: 6
     length: 2
     gridPostion: {x: 3, y: 5, z: 0}
     direction: 2
   - vehicleId: 20
-    vehicleColor: {r: 1, g: 0, b: 1, a: 1}
     capacity: 4
     length: 1
     gridPostion: {x: 5, y: 5, z: 0}
     direction: 2
   personGroups:
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
-    Count: 4
-    slotPosition: {x: -1, y: 0, z: 0}
-    ownerVehicleId: 3
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
-    Count: 4
-    slotPosition: {x: -1, y: 0, z: 0}
-    ownerVehicleId: 3
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 0, z: 0}
-    ownerVehicleId: 1
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 6
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 0, z: 0}
-    ownerVehicleId: 1
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 7
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
-    Count: 4
+  - groupPersonId: 0
+    Count: 3
     slotPosition: {x: 6, y: 0, z: 0}
     ownerVehicleId: 0
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 7
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 7
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 3, z: 0}
-    ownerVehicleId: 11
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
-    Count: 4
+  - groupPersonId: 1
+    Count: 1
+    slotPosition: {x: 6, y: 0, z: 0}
+    ownerVehicleId: 0
+  - groupPersonId: 2
+    Count: 3
     slotPosition: {x: 6, y: 0, z: 0}
     ownerVehicleId: 1
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
-    Count: 4
-    slotPosition: {x: -1, y: 5, z: 0}
-    ownerVehicleId: 19
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
+  - groupPersonId: 3
+    Count: 3
+    slotPosition: {x: 6, y: 0, z: 0}
+    ownerVehicleId: 1
+  - groupPersonId: 4
     Count: 2
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 6
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 3, z: 0}
-    ownerVehicleId: 11
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
-    Count: 4
-    slotPosition: {x: -1, y: 0, z: 0}
-    ownerVehicleId: 3
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 6
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 7
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
+    slotPosition: {x: 6, y: 0, z: 0}
+    ownerVehicleId: 1
+  - groupPersonId: 5
     Count: 2
-    slotPosition: {x: -1, y: 0, z: 0}
-    ownerVehicleId: 3
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    Count: 4
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 2
-  - colorPerson: {r: 0, g: 1, b: 0, a: 1}
+  - groupPersonId: 6
+    Count: 2
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 2
+  - groupPersonId: 7
+    Count: 3
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 3
+  - groupPersonId: 8
+    Count: 1
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 3
+  - groupPersonId: 9
+    Count: 2
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 4
+  - groupPersonId: 10
+    Count: 2
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 4
+  - groupPersonId: 11
+    Count: 3
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 5
+  - groupPersonId: 12
+    Count: 2
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 5
+  - groupPersonId: 13
+    Count: 3
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 5
+  - groupPersonId: 14
+    Count: 3
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 6
+  - groupPersonId: 15
+    Count: 1
+    slotPosition: {x: 6, y: 1, z: 0}
+    ownerVehicleId: 6
+  - groupPersonId: 16
+    Count: 2
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 7
+  - groupPersonId: 17
+    Count: 2
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 7
+  - groupPersonId: 18
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 8
+  - groupPersonId: 19
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 8
+  - groupPersonId: 20
+    Count: 3
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 8
+  - groupPersonId: 21
+    Count: 1
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 8
+  - groupPersonId: 22
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 9
+  - groupPersonId: 23
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 9
+  - groupPersonId: 24
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 9
+  - groupPersonId: 25
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 10
+  - groupPersonId: 26
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 10
+  - groupPersonId: 27
+    Count: 3
+    slotPosition: {x: 6, y: 3, z: 0}
+    ownerVehicleId: 11
+  - groupPersonId: 28
+    Count: 3
+    slotPosition: {x: 6, y: 3, z: 0}
+    ownerVehicleId: 11
+  - groupPersonId: 29
+    Count: 2
+    slotPosition: {x: 6, y: 3, z: 0}
+    ownerVehicleId: 11
+  - groupPersonId: 30
+    Count: 2
+    slotPosition: {x: 6, y: 3, z: 0}
+    ownerVehicleId: 12
+  - groupPersonId: 31
+    Count: 2
+    slotPosition: {x: 6, y: 3, z: 0}
+    ownerVehicleId: 12
+  - groupPersonId: 32
+    Count: 2
+    slotPosition: {x: 6, y: 3, z: 0}
+    ownerVehicleId: 12
+  - groupPersonId: 33
+    Count: 3
+    slotPosition: {x: 6, y: 3, z: 0}
+    ownerVehicleId: 13
+  - groupPersonId: 34
+    Count: 1
+    slotPosition: {x: 6, y: 3, z: 0}
+    ownerVehicleId: 13
+  - groupPersonId: 35
+    Count: 2
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 14
+  - groupPersonId: 36
+    Count: 2
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 14
+  - groupPersonId: 37
+    Count: 3
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 14
+  - groupPersonId: 38
+    Count: 1
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 14
+  - groupPersonId: 39
+    Count: 3
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 15
+  - groupPersonId: 40
+    Count: 1
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 15
+  - groupPersonId: 41
+    Count: 2
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 16
+  - groupPersonId: 42
+    Count: 2
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 16
+  - groupPersonId: 43
+    Count: 2
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 17
+  - groupPersonId: 44
+    Count: 2
+    slotPosition: {x: 6, y: 4, z: 0}
+    ownerVehicleId: 17
+  - groupPersonId: 45
+    Count: 2
+    slotPosition: {x: -1, y: 5, z: 0}
+    ownerVehicleId: 18
+  - groupPersonId: 46
+    Count: 2
+    slotPosition: {x: -1, y: 5, z: 0}
+    ownerVehicleId: 18
+  - groupPersonId: 47
+    Count: 2
+    slotPosition: {x: -1, y: 5, z: 0}
+    ownerVehicleId: 18
+  - groupPersonId: 48
+    Count: 2
+    slotPosition: {x: -1, y: 5, z: 0}
+    ownerVehicleId: 18
+  - groupPersonId: 49
     Count: 2
     slotPosition: {x: -1, y: 5, z: 0}
     ownerVehicleId: 19
-  - colorPerson: {r: 1, g: 0, b: 0, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 3, z: 0}
-    ownerVehicleId: 11
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 6
-  - colorPerson: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    Count: 4
-    slotPosition: {x: -1, y: 0, z: 0}
-    ownerVehicleId: 2
-  - colorPerson: {r: 0.6, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 6
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 7
-  - colorPerson: {r: 1, g: 0.5, b: 0, a: 1}
-    Count: 4
-    slotPosition: {x: -1, y: 0, z: 0}
-    ownerVehicleId: 3
-  - colorPerson: {r: 1, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 1, z: 0}
-    ownerVehicleId: 7
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 0, z: 0}
-    ownerVehicleId: 0
-  - colorPerson: {r: 0, g: 1, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 0, z: 0}
-    ownerVehicleId: 1
-  - colorPerson: {r: 0, g: 0, b: 1, a: 1}
-    Count: 4
-    slotPosition: {x: 6, y: 0, z: 0}
-    ownerVehicleId: 0
+  - groupPersonId: 50
+    Count: 2
+    slotPosition: {x: -1, y: 5, z: 0}
+    ownerVehicleId: 19
+  - groupPersonId: 51
+    Count: 2
+    slotPosition: {x: -1, y: 5, z: 0}
+    ownerVehicleId: 19
+  - groupPersonId: 52
+    Count: 3
+    slotPosition: {x: -1, y: 5, z: 0}
+    ownerVehicleId: 20
+  - groupPersonId: 53
+    Count: 1
+    slotPosition: {x: -1, y: 5, z: 0}
+    ownerVehicleId: 20
   levelIndex: 1
+  time: 0
   difficultyScore: 368

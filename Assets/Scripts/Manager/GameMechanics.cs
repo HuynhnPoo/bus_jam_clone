@@ -24,14 +24,23 @@ public static class GameMechanics
     // click di chuyển xe
     public static void ProcessVehicalClick(VehicleController vehicalController)
     {
+        Debug.Log("thực hien di chuyển A");
+
         //  Debug.LogWarning("hien thi ra vehicle data" + vehicalController.vehicleData);
         if (GameManager.Instance.gridManager.Board.CheckIfPathIsClear(vehicalController.vehicleData))
         {
-            vehicalController.SetSelected(true); // set có thể click
+            //vehicalController.SetSelected(true); // set có thể click
 
-            GameManager.Instance.gridManager.Board.RemoveVehicleFromBoard(vehicalController.vehicleData.id);
+            //GameManager.Instance.gridManager.Board.RemoveVehicleFromBoard(vehicalController.vehicleData.id);
 
-            MoveVehicleTween(vehicalController);
+            //MoveVehicleTween(vehicalController);
+            Debug.Log("thực hien di chuyển b");
+
+            ICommand icommand = new RedoCommand(vehicalController);
+
+
+            GameManager.Instance.RedoBoost.ExecuteCommand(icommand);
+
         }
         else
         {
@@ -40,7 +49,7 @@ public static class GameMechanics
     }
 
     // thưc hien xe đến nơi 
-    private static void MoveVehicleTween(VehicleController vehicle)
+    public static void MoveVehicleTween(VehicleController vehicle, System.Action<Transform> OnArrived = null)
     {
         Board board = GameManager.Instance.gridManager.Board;
         VehicleState vehicleState = vehicle.vehicleData;
@@ -78,8 +87,12 @@ public static class GameMechanics
                 vehicle.transform.position = targetSlot.position + new Vector3(0, 1, 0);
                 vehicle.transform.eulerAngles = new Vector3(0, 0, 90);
 
-                vehicle.CheckColorPeron(targetSlot); // kiểm tra người cùng mau không khi xe đến nơi đỗ
-               // vehicle.IsArrived = true;
+                //  vehicle.CheckColorPeron(targetSlot); // kiểm tra người cùng mau không khi xe đến nơi đỗ
+                // vehicle.IsArrived = true;
+                vehicle.SetParkingSlot(targetSlot); // đến slot trong
+                GameManager.Instance.NotifyVehicles();
+
+                OnArrived?.Invoke(targetSlot);
             });
         }
         else
@@ -114,7 +127,7 @@ public static class GameMechanics
         float rightEdge = GetRightEdge() - 0.5f;
         float distance = index * 0.5f;
         float maxDistance = rightEdge - startPos.x;
-        
+
         if (distance <= maxDistance)
         {
             return new Vector3(startPos.x + distance, startPos.y, startPos.z);
@@ -128,6 +141,7 @@ public static class GameMechanics
         Camera camera = Camera.main;
         return camera.ViewportToWorldPoint(new Vector3(1, 0.5f, Mathf.Abs(camera.transform.position.z))).x;
     }
+
 
   
 }

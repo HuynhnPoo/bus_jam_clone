@@ -14,6 +14,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform holderSLotParking;
     [SerializeField] private Transform holderVehical;
     [SerializeField] private Transform holderPerson;
+    public Transform HolderPerson => holderPerson;
 
 
     [Header("Prefabs")]
@@ -110,27 +111,34 @@ public class GridManager : MonoBehaviour
 
         foreach (var personGroup in levelData.personGroups)
         {
+            VehicleState ownerVehicle = Board.vehicles.FirstOrDefault(v => v.id == personGroup.ownerVehicleId);
+            Color personColor = ownerVehicle != null ? ownerVehicle.color : Color.white;
             // Sinh từng người trong nhóm (Group)
+            Debug.Log(
+       $"GROUP ID: {personGroup.groupPersonId} | " +
+       $"OWNER VEHICLE ID: {personGroup.ownerVehicleId} | " +
+       $"COLOR: {personColor}"
+   );
             for (int i = 0; i < personGroup.Count; i++)
             {
                 // Tính khoảng cách đứng giãn cách giữa các người trong cùng 1 nhóm
                 Vector3 posPerson = GameMechanics.CalculatePathPosition(totalsGroupPerson,holderPerson.position);
 
                 GameObject personObj = Instantiate(personPrefab, posPerson, Quaternion.identity, holderPerson);
-               // personObj.name = $"Person_{group.color}_{group.id}_{i}";
+                personObj.name = $"Person_{personGroup.groupPersonId}_{i}";
 
                 // Set up visual màu sắc
                 PersonVisual personVisual = personObj.GetComponentInChildren<PersonVisual>();
                 if (personVisual != null)
                 {
-                    personVisual.Setup(personGroup.colorPerson);
+                   // Debug.Log("person Id "+ personGroup.personId);
+                    personVisual.Setup(personColor,personGroup.groupPersonId);
 
-                
                 }
                 
                 totalsGroupPerson++;
                
-                GameManager.Instance.LinePperson.Add(personObj);
+                GameManager.Instance.LinePperson.Add(personObj); // them nguoi vafo lisst ddeer de quan li
                 
                 // spawnedPersons.Add(personObj);
             }

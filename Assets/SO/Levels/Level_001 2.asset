@@ -1,0 +1,337 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4a26d5607591f48a1dfc0595b11bb0, type: 3}
+  m_Name: Level_001 2
+  m_EditorClassIdentifier: 
+  width: 6
+  height: 6
+  cellSize: 2
+  spacing: 1
+  vehicles:
+  - vehicleId: 0
+    capacity: 8
+    length: 3
+    gridPostion: {x: 0, y: 0, z: 0}
+    direction: 2
+  - vehicleId: 1
+    capacity: 8
+    length: 3
+    gridPostion: {x: 3, y: 0, z: 0}
+    direction: 2
+  - vehicleId: 2
+    capacity: 6
+    length: 2
+    gridPostion: {x: 0, y: 1, z: 0}
+    direction: 2
+  - vehicleId: 3
+    capacity: 4
+    length: 1
+    gridPostion: {x: 2, y: 1, z: 0}
+    direction: 2
+  - vehicleId: 4
+    capacity: 6
+    length: 2
+    gridPostion: {x: 3, y: 1, z: 0}
+    direction: 2
+  - vehicleId: 5
+    capacity: 4
+    length: 1
+    gridPostion: {x: 5, y: 1, z: 0}
+    direction: 2
+  - vehicleId: 6
+    capacity: 4
+    length: 1
+    gridPostion: {x: 0, y: 2, z: 0}
+    direction: 2
+  - vehicleId: 7
+    capacity: 4
+    length: 1
+    gridPostion: {x: 1, y: 2, z: 0}
+    direction: 2
+  - vehicleId: 8
+    capacity: 6
+    length: 2
+    gridPostion: {x: 2, y: 2, z: 0}
+    direction: 2
+  - vehicleId: 9
+    capacity: 6
+    length: 2
+    gridPostion: {x: 4, y: 2, z: 0}
+    direction: 2
+  - vehicleId: 10
+    capacity: 6
+    length: 2
+    gridPostion: {x: 0, y: 3, z: 0}
+    direction: 2
+  - vehicleId: 11
+    capacity: 4
+    length: 1
+    gridPostion: {x: 2, y: 3, z: 0}
+    direction: 2
+  - vehicleId: 12
+    capacity: 4
+    length: 1
+    gridPostion: {x: 3, y: 3, z: 0}
+    direction: 2
+  - vehicleId: 13
+    capacity: 4
+    length: 1
+    gridPostion: {x: 4, y: 3, z: 0}
+    direction: 2
+  - vehicleId: 14
+    capacity: 4
+    length: 1
+    gridPostion: {x: 5, y: 3, z: 0}
+    direction: 2
+  - vehicleId: 15
+    capacity: 8
+    length: 3
+    gridPostion: {x: 0, y: 4, z: 0}
+    direction: 2
+  - vehicleId: 16
+    capacity: 8
+    length: 3
+    gridPostion: {x: 3, y: 4, z: 0}
+    direction: 2
+  - vehicleId: 17
+    capacity: 6
+    length: 2
+    gridPostion: {x: 5, y: 5, z: 0}
+    direction: 3
+  - vehicleId: 18
+    capacity: 4
+    length: 1
+    gridPostion: {x: 3, y: 5, z: 0}
+    direction: 3
+  - vehicleId: 19
+    capacity: 4
+    length: 1
+    gridPostion: {x: 2, y: 5, z: 0}
+    direction: 3
+  - vehicleId: 20
+    capacity: 4
+    length: 1
+    gridPostion: {x: 1, y: 5, z: 0}
+    direction: 3
+  - vehicleId: 21
+    capacity: 4
+    length: 1
+    gridPostion: {x: 0, y: 5, z: 0}
+    direction: 3
+  personGroups:
+  - groupPersonId: 0
+    Count: 3
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 0
+  - groupPersonId: 1
+    Count: 2
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 0
+  - groupPersonId: 2
+    Count: 3
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 0
+  - groupPersonId: 3
+    Count: 3
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 1
+  - groupPersonId: 4
+    Count: 2
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 1
+  - groupPersonId: 5
+    Count: 2
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 1
+  - groupPersonId: 6
+    Count: 1
+    slotPosition: {x: -1, y: 0, z: 0}
+    ownerVehicleId: 1
+  - groupPersonId: 7
+    Count: 2
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 2
+  - groupPersonId: 8
+    Count: 3
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 2
+  - groupPersonId: 9
+    Count: 1
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 2
+  - groupPersonId: 10
+    Count: 3
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 3
+  - groupPersonId: 11
+    Count: 1
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 3
+  - groupPersonId: 12
+    Count: 3
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 4
+  - groupPersonId: 13
+    Count: 3
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 4
+  - groupPersonId: 14
+    Count: 3
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 5
+  - groupPersonId: 15
+    Count: 1
+    slotPosition: {x: -1, y: 1, z: 0}
+    ownerVehicleId: 5
+  - groupPersonId: 16
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 6
+  - groupPersonId: 17
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 6
+  - groupPersonId: 18
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 7
+  - groupPersonId: 19
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 7
+  - groupPersonId: 20
+    Count: 3
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 8
+  - groupPersonId: 21
+    Count: 3
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 8
+  - groupPersonId: 22
+    Count: 2
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 9
+  - groupPersonId: 23
+    Count: 3
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 9
+  - groupPersonId: 24
+    Count: 1
+    slotPosition: {x: -1, y: 2, z: 0}
+    ownerVehicleId: 9
+  - groupPersonId: 25
+    Count: 3
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 10
+  - groupPersonId: 26
+    Count: 3
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 10
+  - groupPersonId: 27
+    Count: 3
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 11
+  - groupPersonId: 28
+    Count: 1
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 11
+  - groupPersonId: 29
+    Count: 3
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 12
+  - groupPersonId: 30
+    Count: 1
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 12
+  - groupPersonId: 31
+    Count: 3
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 13
+  - groupPersonId: 32
+    Count: 1
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 13
+  - groupPersonId: 33
+    Count: 2
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 14
+  - groupPersonId: 34
+    Count: 2
+    slotPosition: {x: -1, y: 3, z: 0}
+    ownerVehicleId: 14
+  - groupPersonId: 35
+    Count: 2
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 15
+  - groupPersonId: 36
+    Count: 3
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 15
+  - groupPersonId: 37
+    Count: 3
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 15
+  - groupPersonId: 38
+    Count: 3
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 16
+  - groupPersonId: 39
+    Count: 3
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 16
+  - groupPersonId: 40
+    Count: 2
+    slotPosition: {x: -1, y: 4, z: 0}
+    ownerVehicleId: 16
+  - groupPersonId: 41
+    Count: 3
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 17
+  - groupPersonId: 42
+    Count: 3
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 17
+  - groupPersonId: 43
+    Count: 3
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 18
+  - groupPersonId: 44
+    Count: 1
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 18
+  - groupPersonId: 45
+    Count: 3
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 19
+  - groupPersonId: 46
+    Count: 1
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 19
+  - groupPersonId: 47
+    Count: 2
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 20
+  - groupPersonId: 48
+    Count: 2
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 20
+  - groupPersonId: 49
+    Count: 2
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 21
+  - groupPersonId: 50
+    Count: 2
+    slotPosition: {x: 6, y: 5, z: 0}
+    ownerVehicleId: 21
+  levelIndex: 1
+  time: 0
+  difficultyScore: 376

@@ -14,7 +14,6 @@ public enum MoveDirection
 public class VehicleData
 {
     public int vehicleId;
-    public Color vehicleColor;
     public int capacity;
     public int length;
 
@@ -25,7 +24,8 @@ public class VehicleData
 [System.Serializable]
 public class PersonGroupData
 {
-    public Color colorPerson;
+    public int groupPersonId;
+  //  public Color colorPerson;
     public int Count;
     public Vector3Int slotPosition;
     public int ownerVehicleId;

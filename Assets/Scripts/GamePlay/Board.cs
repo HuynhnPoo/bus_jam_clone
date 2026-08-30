@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
+
+
 public class VehicleState
 {
     public int id;
@@ -19,12 +21,15 @@ public class VehicleState
 
     public void GotOnBus()
     {
-        if(currentOccupied< capacity)
+        if (currentOccupied < capacity)
         {
             currentOccupied++;
         }
     }
+
 }
+
+
 
 public class Board
 {
@@ -39,6 +44,20 @@ public class Board
     public enum CellState { Empty, Vehicle }
 
 
+    private static readonly Color[] AvailableColors =
+{
+    new Color(1f, 0.2f, 0.2f),     // Red
+    new Color(0.2f, 0.5f, 1f),     // Blue
+    new Color(0.2f, 0.8f, 0.3f),   // Green
+    new Color(1f, 0.8f, 0.1f),     // Yellow
+    new Color(0.7f, 0.3f, 1f),     // Purple
+    new Color(1f, 0.5f, 0.1f)      // Orange
+};
+
+    public Color GetRamdomColor()
+    {
+        return AvailableColors[Random.Range(0, AvailableColors.Length)];
+    }
 
     public static Board FromLevelData(LevelData data)
     {
@@ -46,7 +65,6 @@ public class Board
         {
             width = data.width,
             height = data.height,
-
             cellSize = data.cellSize,
             spacing = data.spacing,
 
@@ -54,12 +72,16 @@ public class Board
             vehicles = new List<VehicleState>()
         };
 
+        List<Color> randomColors = GetRandomColors(data.vehicles.Count);
+
+
         foreach (var v in data.vehicles)
         {
             var state = new VehicleState
             {
                 id = v.vehicleId,
-                color = v.vehicleColor,
+                color = randomColors[v.vehicleId],
+
                 capacity = v.capacity,
                 currentOccupied = 0,
                 length = v.length,
@@ -82,15 +104,47 @@ public class Board
 
             b.personMap[p.slotPosition].Add(new PersonGroupData
             {
-                colorPerson = p.colorPerson,
+                //colorPerson = p.colorPerson,
+                groupPersonId=p.groupPersonId,
                 Count = p.Count,
-                slotPosition = p.slotPosition
+                slotPosition = p.slotPosition,
+                ownerVehicleId = p.ownerVehicleId,
             });
         }
 
         return b;
     }
 
+    public static List<Color> GetRandomColors(int count)
+    {
+        List<Color> colors =
+            new List<Color>(AvailableColors);
+
+        Shuffle(colors);
+
+        List<Color> result =
+            new List<Color>();
+
+
+        for (int i = 0; i < count; i++)
+        {
+            result.Add(colors[i % colors.Count]);
+        }
+
+        return result;
+    }
+
+    private static void Shuffle<T>(List<T> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+
+            T temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+    }
     public Vector3 GetPostionWorld(int x, int y)
     {
         float step = cellSize + spacing;
@@ -121,9 +175,9 @@ public class Board
         int checkX = currentPos.x + dirDelta.x;
         int checkY = currentPos.y + dirDelta.y;
 
-        while (checkX>=0 && checkX <width && checkY>=0 && checkY <height )
+        while (checkX >= 0 && checkX < width && checkY >= 0 && checkY < height)
         {
-            if (cells[checkX,checkY]==CellState.Vehicle)
+            if (cells[checkX, checkY] == CellState.Vehicle)
             {
                 return false;
             }
@@ -131,7 +185,7 @@ public class Board
             checkX += dirDelta.x;
             checkY += dirDelta.y;
         }
-        
+
         return true;
     }
 
@@ -140,7 +194,7 @@ public class Board
         var v = vehicles.FirstOrDefault(x => x.id == vehicalID);
         if (v == null) return;
 
-        foreach (var c in GetOccupiedCells(v)) 
+        foreach (var c in GetOccupiedCells(v))
         {
             if (InBounds(c))
             {
@@ -220,7 +274,7 @@ public class Board
 
         for (int i = groups.Count - 1; i >= 0; i--)
         {
-            if (groups[i].colorPerson == v.color && v.currentOccupied < v.capacity)
+            if (v.currentOccupied < v.capacity)
             {
                 int canTake = Mathf.Min(groups[i].Count, v.capacity - v.currentOccupied);
                 v.currentOccupied += canTake;
@@ -234,7 +288,7 @@ public class Board
 
     bool InBounds(Vector3Int p) => p.x >= 0 && p.x < width && p.y >= 0 && p.y < height;
 
-   public Vector3Int DirToDelta(MoveDirection d) => d switch
+    public Vector3Int DirToDelta(MoveDirection d) => d switch
     {
         MoveDirection.Up => Vector3Int.up,
         MoveDirection.Down => Vector3Int.down,

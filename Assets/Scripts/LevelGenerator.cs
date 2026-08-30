@@ -5,8 +5,7 @@ using System.Linq;
 public class LevelGenerator
 {
     private int width, height, vehicleCount, minCapacity, maxCapacity;
-    private Color[] palette;
-
+  
     private enum CellOccupancy { Empty, VehicleBody, PathReserved }
     private CellOccupancy[,] occupancy;
 
@@ -14,21 +13,13 @@ public class LevelGenerator
     private List<PersonGroupData> personGroups;
     private Dictionary<int, List<Vector3Int>> vehicleExitPaths;
 
-    public void Setup(int gridWidth, int gridHeight, int vCount, int minCap, int maxCap, Color[] colorPalette = null)
+    public void Setup(int gridWidth, int gridHeight, int vCount, int minCap, int maxCap)
     {
         width = gridWidth;
         height = gridHeight;
         vehicleCount = vCount;
         minCapacity = minCap;
         maxCapacity = maxCap;
-
-        palette = colorPalette ?? new Color[]
-        {
-            Color.red, Color.blue, Color.green, Color.yellow,
-            new Color(1f, 0.5f, 0f),
-            new Color(0.6f, 0f, 1f),
-            Color.cyan, Color.magenta
-        };
     }
     public LevelData GenerateLevelData(int levelIndex)
     {
@@ -75,7 +66,6 @@ public class LevelGenerator
             int maxLen = Mathf.Min(3, cellsLeft);
             int length = Random.Range(1, maxLen + 1);
             int capacity = Random.Range(minCapacity, maxCapacity + 1);
-            Color color = palette[Random.Range(0, palette.Length)];
 
             // headPos = ô ngoài cùng của xe theo hướng thoát (ô sẽ ra khỏi lưới trước)
             int headX = dir == MoveDirection.Right ? x : x + (length - 1) * -step * -1;
@@ -87,7 +77,6 @@ public class LevelGenerator
             var vehicle = new VehicleData
             {
                 vehicleId = idCounter,
-                vehicleColor = color,
                 capacity = capacity,
                 length = length,
                 gridPostion = head,
@@ -131,12 +120,9 @@ public class LevelGenerator
             MarkOccupied(bodyCells, CellOccupancy.VehicleBody);
             MarkOccupied(exitPath, CellOccupancy.PathReserved);
 
-            Color color = palette[Random.Range(0, palette.Length)];
-
             var newVehicle = new VehicleData
             {
                 vehicleId = id,
-                vehicleColor = color,
                 capacity = capacity,
                 length = length,
                 gridPostion = headPos,
@@ -184,14 +170,12 @@ public class LevelGenerator
                 if (bestExitPath.Count > 0)
                     MarkOccupied(bestExitPath, CellOccupancy.PathReserved);
 
-                Color color = palette[Random.Range(0, palette.Length)];
                 int capacity = Random.Range(minCapacity, maxCapacity + 1);
                 int newId = placedCount++;
 
                 var newVehicle = new VehicleData
                 {
                     vehicleId = newId,
-                    vehicleColor = color,
                     capacity = capacity,
                     length = 1,
                     gridPostion = cell,
@@ -207,30 +191,23 @@ public class LevelGenerator
     private void GenerateBalancedPeople()
     {
         personGroups = new List<PersonGroupData>();
+        int personIdCounter = 0;
 
         foreach (var v in vehicles)
         {
             if (!vehicleExitPaths.TryGetValue(v.vehicleId, out var path) || path.Count == 0)
                 continue;
 
-            Vector3Int waitSlot = path[0]; // lane-packing chỉ có đúng 1 waitSlot mỗi xe
-            int remaining = v.capacity;
+            Vector3Int waitSlot = path[0];
 
-            // Chia nhỏ thành vài nhóm để nhìn sinh động hơn (không bắt buộc, có thể để 1 nhóm duy nhất)
-            while (remaining > 0)
+            // Tạo đúng 1 group chứa toàn bộ capacity của xe
+            personGroups.Add(new PersonGroupData
             {
-                int groupSize = Mathf.Min(Random.Range(3, 6), remaining);
-
-                personGroups.Add(new PersonGroupData
-                {
-                    colorPerson = v.vehicleColor,
-                    Count = groupSize,
-                    slotPosition = waitSlot,
-                    ownerVehicleId = v.vehicleId
-                });
-
-                remaining -= groupSize;
-            }
+                groupPersonId = personIdCounter++,
+                Count = v.capacity,
+                slotPosition = waitSlot,
+                ownerVehicleId = v.vehicleId
+            });
         }
     }
 
