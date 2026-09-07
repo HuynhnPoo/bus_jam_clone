@@ -2,6 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class VehicleState
+{
+    public int id;
+    public Color color;
+    public int capacity;        // số người xe có thể chứa
+    public int currentOccupied; // số người đã lên xe
+    public int length;
+    public Vector3Int position;
+    public MoveDirection direction;
+    public bool isActive;
+
+    public bool IsFull => currentOccupied >= capacity;
+    public int AvailableSeats => capacity - currentOccupied;
+
+    public void GotOnBus()
+    {
+        if (currentOccupied < capacity)
+            currentOccupied++;
+    }
+}
+
 public class VisualVehical : MonoBehaviour
 {
     [SerializeField] private MeshRenderer meshRenderers;

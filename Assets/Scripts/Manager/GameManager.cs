@@ -9,7 +9,7 @@ public class GameManager : SingletonBase<GameManager>
 {
 
     [Header("setting")]
-    private static bool canPause=true;
+    private static bool canPause = false;
 
     public RedoBoost RedoBoost;
     public GridManager gridManager { get; private set; }
@@ -41,19 +41,19 @@ public class GameManager : SingletonBase<GameManager>
     {
         foreach (GameObject slot in gridManager.slotOccupants) // kiem tra cac xe đã đến 
         {
-            if (slot == null) continue; 
+            if (slot == null) continue;
 
             VehicleController controller = slot.GetComponent<VehicleController>();
 
             if (controller == null) continue;
-          // controller.CheckColorPerson();
+            // controller.CheckColorPerson();
             if (controller.CheckColorPerson()) break;
         }
     }
 
     public void ClearSlot(GameObject vehicle) // clear slot cho ô đỗ trông khi xe ra
     {
-        for (int i =0; i<GameManager.Instance.gridManager.slotOccupants.Length; i++)
+        for (int i = 0; i < GameManager.Instance.gridManager.slotOccupants.Length; i++)
         {
             if (GameManager.Instance.gridManager.slotOccupants[i] == vehicle)
             {
@@ -63,21 +63,16 @@ public class GameManager : SingletonBase<GameManager>
             }
         }
     }
-    
-   
-    public void Pause(bool canPause)
+
+
+    public void TogglePause()
     {
-        if (canPause)
-        {
-            Time.timeScale = 0;
-            UIManager.Instance.PausePanelGO.SetActive(true);
-            canPause = false;
-        }
-        else
-        {
-            Time.timeScale = 1;
-            UIManager.Instance.PausePanelGO.SetActive(false);
-            canPause =true;
-        }
+        canPause = !canPause;
+        Debug.Log("canpuae là" + canPause);
+
+        Time.timeScale = canPause ? 0 : 1;
+        if (canPause) EventManager.Notify(EventGameType.Pause);
+        else EventManager.Notify(EventGameType.Resume);
+
     }
 }

@@ -23,15 +23,16 @@ public abstract class PowerUpBase : MonoBehaviour
         Debug.Log("thuc hien su dụng");
         if (CanUse())
         {
+            Debug.Log("số lượng là "+ quantity +"bạn có thể sử dụng được poweerup" + CanUse());
             quantity--; // giảm số lượng
             ExecutePowerUp(); // sử dụng powerup nếu điều khiện đúng
         }
     }
 
-    protected abstract void ExecutePowerUp();
+    protected abstract void ExecutePowerUp(); // ham thuc hien
 
-    public virtual void AddQuantity()
+    public virtual void AddQuantity() 
     {
-        quantity++;
+        quantity++;// thưc hiện tang so luong
     }
 }

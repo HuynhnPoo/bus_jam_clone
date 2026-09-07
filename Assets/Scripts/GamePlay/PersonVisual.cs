@@ -33,25 +33,26 @@ public struct ColorUtilityBusJam
 public class PersonVisual : MonoBehaviour
 {
     [SerializeField] private MeshRenderer m_Renderer;
-    
-    public int GroupPesonId { get; private set; }
 
+    public int GroupPesonId { get; private set; }
+    private MaterialPropertyBlock propertyBlock;
     private Color colorPerson;
     public Color ColorPerson => colorPerson;
 
+    private void Awake()
+    {
+        m_Renderer = GetComponent<MeshRenderer>();
+        propertyBlock = new MaterialPropertyBlock();
+    }
+
     public void Setup(Color color, int GroupPesonId)
-    { 
+    {
         colorPerson = color; // gắn mau cho tưng người
 
         this.GroupPesonId = GroupPesonId;
 
-        MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
-        propertyBlock.SetColor("_Color",color);
+        m_Renderer.GetPropertyBlock(propertyBlock);
+        propertyBlock.SetColor("_Color", color);
         m_Renderer.SetPropertyBlock(propertyBlock); // set màu cho material
-
-    }
-    private void Awake()
-    {
-        m_Renderer = GetComponent<MeshRenderer>(); 
     }
 }

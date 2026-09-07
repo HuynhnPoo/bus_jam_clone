@@ -16,6 +16,9 @@ MonoBehaviour:
   height: 6
   cellSize: 2
   spacing: 1
+  levelIndex: 2
+  time: 0
+  difficulty: 0
   vehicles:
   - vehicleId: 0
     capacity: 10
@@ -151,6 +154,3 @@ MonoBehaviour:
     Count: 11
     slotPosition: {x: 4, y: 0, z: 0}
     ownerVehicleId: 0
-  levelIndex: 2
-  time: 0
-  difficultyScore: 124

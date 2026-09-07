@@ -84,8 +84,8 @@ public class GridManager : MonoBehaviour
 
         foreach (var vehical in Board.vehicles)
         {
-            Vector3 posSpawn = Board.GetPostionWorld(vehical.position.x, vehical.position.y);
-            Quaternion quaternion = Board.GetRotationWorld(vehical.direction);
+            Vector3 posSpawn = Board.GetPositionWorld(vehical.position.x, vehical.position.y);
+            Quaternion quaternion =GameMechanics. GetRotationWorld(vehical.direction);
 
             GameObject obj = Instantiate(tilePrefab[vehical.length - 1], posSpawn, quaternion, holderVehical);
             obj.name = $"vehical {vehical.id}";
@@ -113,12 +113,7 @@ public class GridManager : MonoBehaviour
         {
             VehicleState ownerVehicle = Board.vehicles.FirstOrDefault(v => v.id == personGroup.ownerVehicleId);
             Color personColor = ownerVehicle != null ? ownerVehicle.color : Color.white;
-            // Sinh từng người trong nhóm (Group)
-            Debug.Log(
-       $"GROUP ID: {personGroup.groupPersonId} | " +
-       $"OWNER VEHICLE ID: {personGroup.ownerVehicleId} | " +
-       $"COLOR: {personColor}"
-   );
+           
             for (int i = 0; i < personGroup.Count; i++)
             {
                 // Tính khoảng cách đứng giãn cách giữa các người trong cùng 1 nhóm

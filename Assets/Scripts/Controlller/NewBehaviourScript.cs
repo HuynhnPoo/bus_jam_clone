@@ -5,6 +5,8 @@ using UnityEngine;
 public class NewBehaviourScript : MonoBehaviour
 {
     [SerializeField] private RedoBoost powerUpBase;
+    [SerializeField] private ChangerColor color;
+    [SerializeField] private HintBoost hint;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +18,12 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-     
-            powerUpBase.Use();
+            // powerUpBase.Use();
             // Debug.Log("hine thi ra "+ commandManager.Undo());
+            //color.GetFirstPersonGroup();
+            hint.AddQuantity();
+            hint.Use();
+          
         }
     }
 }

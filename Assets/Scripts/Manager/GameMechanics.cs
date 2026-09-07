@@ -5,28 +5,11 @@ using UnityEngine;
 
 public static class GameMechanics
 {
-
-    //static int offset = 10;
-    //private static Board board;
-    //private static GridManager gridManager;
-    //private static Transform[] whiteSlots;
-    //private static GameObject[] slotOccupants;
-
-    //// Hàm khởi tạo (Constructor) để nhận dữ liệu từ MonoBehaviour bên ngoài truyền vào
-    //public static GameMechanics(Board board, GridManager gridManager, Transform[] whiteSlots)
-    //{
-    //    this.board = board;
-    //    this.gridManager = gridManager;
-    //    this.whiteSlots = whiteSlots;
-    //    this.slotOccupants = new GameObject[whiteSlots.Length];
-    //}
-
     // click di chuyển xe
     public static void ProcessVehicalClick(VehicleController vehicalController)
     {
         Debug.Log("thực hien di chuyển A");
 
-        //  Debug.LogWarning("hien thi ra vehicle data" + vehicalController.vehicleData);
         if (GameManager.Instance.gridManager.Board.CheckIfPathIsClear(vehicalController.vehicleData))
         {
             //vehicalController.SetSelected(true); // set có thể click
@@ -54,7 +37,7 @@ public static class GameMechanics
         Board board = GameManager.Instance.gridManager.Board;
         VehicleState vehicleState = vehicle.vehicleData;
 
-        Vector3 moveDir = board.DirToDelta(vehicleState.direction); // trả về hướng hiên tại của xe
+        Vector3 moveDir = ToDelta(vehicleState.direction); // trả về hướng hiên tại của xe
         float exitDistance = Mathf.Max(board.width, board.height) * (board.spacing + board.cellSize);
         Vector3 exitPos = vehicle.transform.position + moveDir * exitDistance;
 
@@ -142,6 +125,39 @@ public static class GameMechanics
         return camera.ViewportToWorldPoint(new Vector3(1, 0.5f, Mathf.Abs(camera.transform.position.z))).x;
     }
 
+    public static Vector3Int ToDelta(MoveDirection d) => d switch
+    {
+        MoveDirection.Up => Vector3Int.up,
+        MoveDirection.Down => Vector3Int.down,
+        MoveDirection.Left => Vector3Int.left,
+        MoveDirection.Right => Vector3Int.right,
+        _ => Vector3Int.zero
+    };
+    public static Quaternion GetRotationWorld(MoveDirection dir) => dir switch
+    {
+        MoveDirection.Up => Quaternion.LookRotation(Vector3.right),
+        MoveDirection.Down => Quaternion.LookRotation(Vector3.left),
+        MoveDirection.Left => Quaternion.LookRotation(Vector3.back),
+        MoveDirection.Right => Quaternion.LookRotation(Vector3.forward),
+        _ => Quaternion.identity
 
-  
+    };
+
+    public static string ToSymbol(MoveDirection d) => d switch
+    {
+        MoveDirection.Up => "↑",
+        MoveDirection.Down => "↓",
+        MoveDirection.Left => "←",
+        MoveDirection.Right => "→",
+        _ => "?"
+    };
+
+    // Ô "chờ" ngay ngoài mép lưới theo hướng thoát của xe
+    public static Vector3Int GetWaitSlot(Vector3Int headPos, MoveDirection dir, int gridWidth)
+    {
+        return dir == MoveDirection.Right
+            ? new Vector3Int(gridWidth, headPos.y, 0)
+            : new Vector3Int(-1, headPos.y, 0);
+    }
+
 }

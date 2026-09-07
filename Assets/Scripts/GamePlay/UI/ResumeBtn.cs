@@ -6,8 +6,6 @@ public class ResumeBtn : ButtonBase
 {
     protected override void OnClick()
     {
-        Time.timeScale = 1;
-        GameManager.Instance.Pause(GameManager.Instance.CanPause);
-       
+        Time.timeScale = 1;       
     }
 }
