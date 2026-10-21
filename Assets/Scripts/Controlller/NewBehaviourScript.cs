@@ -18,12 +18,29 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            // powerUpBase.Use();
+            //powerUpBase.Use();
             // Debug.Log("hine thi ra "+ commandManager.Undo());
             //color.GetFirstPersonGroup();
-            hint.AddQuantity();
-            hint.Use();
-          
+            //  hint.AddQuantity();
+
+            //  hint.Use();
+            //  GameManager.Instance.CameraShaking(1,0.5f);
+            color.Use();
+
         }
+
+      /*  if (Input.GetKeyDown(KeyCode.A))
+        {
+            color.AddQuantity();
+        }
+        if (Input.GetKeyDown(KeyCode.S)) powerUpBase.AddQuantity();
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            //  hint.Quantily;
+            Debug.Log(powerUpBase.Quantity);
+            Debug.Log(color.Quantity);
+            Debug.Log(hint.Quantity);
+        }*/
     }
 }

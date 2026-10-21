@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "newLevel", menuName = "Level data")]
+[CreateAssetMenu(fileName = "newLevel", menuName = "level/LevelData")]
 public class LevelData : ScriptableObject
 {
     public enum DifficultyType

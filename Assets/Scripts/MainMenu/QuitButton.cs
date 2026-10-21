@@ -15,12 +15,11 @@ public class QuitButton : ButtonBase
         }
         else
         {
-            Time.timeScale = 1;
             UIManager.Instance.ChangeScene(UIManager.SceneType.MainMenu);
         }
 
     }
-   
+
     void QuitApp()
     {
 #if UNITY_EDITOR

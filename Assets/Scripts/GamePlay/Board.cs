@@ -45,10 +45,11 @@ public class Board
         for (int i = 0; i < data.vehicles.Count; i++)
         {
             var v = data.vehicles[i];
+            Color assignedColor = randomColors[v.vehicleId % randomColors.Count];
             var state = new VehicleState
             {
                 id = v.vehicleId,
-                color = randomColors[i],
+                color = assignedColor,
                 capacity = v.capacity,
                 currentOccupied = 0,
                 length = v.length,
@@ -59,7 +60,16 @@ public class Board
             b.vehicles.Add(state);
 
             foreach (var c in b.GetOccupiedCells(state))
-                if (b.InBounds(c)) b.cells[c.x, c.y] = CellState.Vehicle;
+            {
+                if (b.InBounds(c))
+                {
+                    if (b.cells[c.x, c.y] == CellState.Vehicle)
+                    {
+                        Debug.LogError($"[CẢNH BÁO OVERLAP] Xe ID: {state.id} bị ghi đè lên ô ({c.x}, {c.y}) đã có xe khác đứng!");
+                    }
+                    b.cells[c.x, c.y] = CellState.Vehicle;
+                }
+            }
         }
 
         // personMap KHÔNG check InBounds vì waitSlot cố ý nằm NGOÀI lưới (x=-1 hoặc x=width)

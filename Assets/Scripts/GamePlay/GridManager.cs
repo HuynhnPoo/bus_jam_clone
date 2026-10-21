@@ -22,7 +22,11 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject personPrefab;
 
     [SerializeField] private LevelData levelData;
+
+    [SerializeField] private RedoBoost redoBoost;
+
     public Board Board { get; private set; } // Đổi sang public để các hệ thống khác dễ truy cập
+    public RedoBoost RedoBoost  => redoBoost;
 
 
     [SerializeField] private Transform[] whiteSlots = new Transform[5];
@@ -38,15 +42,19 @@ public class GridManager : MonoBehaviour
 
         whiteSlots = holderSLotParking.GetComponentsInChildren<Transform>()
             .Where(t => t != holderSLotParking)
-            .ToArray(); //kiem tra cac con va bo cha
+            .ToArray();
+
 
         slotOccupants = new GameObject[whiteSlots.Length];
         posFirtsPerson = holderPerson.transform.position;
+
     }
 
 
-    private void Start()
+    public void Spawn(LevelData levelData)
     {
+        this.levelData = levelData;
+
         this.Width = levelData.width;
         this.Height = levelData.height;
 
@@ -57,12 +65,7 @@ public class GridManager : MonoBehaviour
         SpawnGrid();// sinh xe
 
         SpawnPersonGroup(); // sinh nguoi
-        //// 3. Sinh các xe (Vehicles) dựa trên danh sách xe trong LevelData
-        //SpawnVehicles();
-    }
-    public void Spawn(LevelData levelData)
-    {
-
+        GameManager.Instance.curentLevel = levelData.levelIndex;
     }
 
     // Hàm tính toán vị trí World Space từ tọa độ Grid (x, y)
@@ -85,9 +88,9 @@ public class GridManager : MonoBehaviour
         foreach (var vehical in Board.vehicles)
         {
             Vector3 posSpawn = Board.GetPositionWorld(vehical.position.x, vehical.position.y);
-            Quaternion quaternion =GameMechanics. GetRotationWorld(vehical.direction);
+            Quaternion quaternion = GameMechanics.GetRotationWorld(vehical.direction);
 
-            GameObject obj = Instantiate(tilePrefab[vehical.length - 1], posSpawn, quaternion, holderVehical);
+            GameObject obj = Instantiate(tilePrefab[vehical.length - 1], posSpawn, quaternion);
             obj.name = $"vehical {vehical.id}";
 
             VisualVehical visualVehical = obj.GetComponentInChildren<VisualVehical>();
@@ -101,7 +104,7 @@ public class GridManager : MonoBehaviour
             controller.Setup(vehical);
 
             visualVehical.SetupVehicle(vehical.color);
-           
+
         }
     }
 
@@ -113,11 +116,11 @@ public class GridManager : MonoBehaviour
         {
             VehicleState ownerVehicle = Board.vehicles.FirstOrDefault(v => v.id == personGroup.ownerVehicleId);
             Color personColor = ownerVehicle != null ? ownerVehicle.color : Color.white;
-           
+
             for (int i = 0; i < personGroup.Count; i++)
             {
                 // Tính khoảng cách đứng giãn cách giữa các người trong cùng 1 nhóm
-                Vector3 posPerson = GameMechanics.CalculatePathPosition(totalsGroupPerson,holderPerson.position);
+                Vector3 posPerson = GameMechanics.CalculatePathPosition(totalsGroupPerson, holderPerson.position);
 
                 GameObject personObj = Instantiate(personPrefab, posPerson, Quaternion.identity, holderPerson);
                 personObj.name = $"Person_{personGroup.groupPersonId}_{i}";
@@ -126,33 +129,15 @@ public class GridManager : MonoBehaviour
                 PersonVisual personVisual = personObj.GetComponentInChildren<PersonVisual>();
                 if (personVisual != null)
                 {
-                   // Debug.Log("person Id "+ personGroup.personId);
-                    personVisual.Setup(personColor,personGroup.groupPersonId);
+                    // Debug.Log("person Id "+ personGroup.personId);
+                    personVisual.Setup(personColor, personGroup.groupPersonId);
 
                 }
-                
+
                 totalsGroupPerson++;
-               
+
                 GameManager.Instance.LinePperson.Add(personObj); // them nguoi vafo lisst ddeer de quan li
-                
-                // spawnedPersons.Add(personObj);
             }
         }
-    }
-
-
-
-    // Xác định góc quay của xe trên trục Y
-    private Quaternion GetRotationFromDirection(MoveDirection direction)
-    {
-        float angle = direction switch
-        {
-            MoveDirection.Up => 0f,
-            MoveDirection.Right => 90f,
-            MoveDirection.Down => 180f,
-            MoveDirection.Left => 270f,
-            _ => 0f
-        };
-        return Quaternion.Euler(0, angle, 0);
     }
 }

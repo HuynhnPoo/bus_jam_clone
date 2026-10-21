@@ -14,6 +14,7 @@ public class RedoCommand : ICommand
     private readonly Transform _targetSlot;
 
     private Transform arrivedSlot;
+    private bool isMoving;
 
     private readonly List<GameObject> _boardedPassengers;
 
@@ -26,6 +27,8 @@ public class RedoCommand : ICommand
 
     public void Execute()
     {
+        if (vehicleController == null || isMoving) return;
+       isMoving = true;
         vehicleController.SetSelected(true);
         GameManager.Instance.gridManager.Board.RemoveVehicleFromBoard(vehicleController.vehicleData.id);
         GameMechanics.MoveVehicleTween(vehicleController,OnVehicleArrived);
@@ -35,7 +38,8 @@ public class RedoCommand : ICommand
     private void OnVehicleArrived(Transform slot)
     {
         arrivedSlot = slot;
-        GameManager.Instance.RedoBoost.AddQuantity();
+        isMoving = false;
+       // GameManager.Instance.RedoBoost.AddQuantity();
         // Lưu lại người hiện đang ở trong xe tại thời điểm đỗ (nếu có)
         // vehicleController = new List<GameObject>(vehicleController.GetPassengers());
     }
@@ -43,6 +47,7 @@ public class RedoCommand : ICommand
 
     public void Undo()
     {
+        if (vehicleController == null && isMoving) return;
         vehicleController.DOKill();
 
         vehicleController.ReuturnPassengersToLine(); // trả người về hàng

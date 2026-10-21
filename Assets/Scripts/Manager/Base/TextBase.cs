@@ -10,7 +10,7 @@ public abstract class TextBase : MonoBehaviour
 
     protected StringBuilder _sbText =new StringBuilder(10);
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (this.text != null) return;
         this.text = GetComponent<TextMeshProUGUI>();
@@ -21,7 +21,7 @@ public abstract class TextBase : MonoBehaviour
     protected virtual void Update()
     {
         this.PrintText(_sbText);
-        text.SetText(_sbText);
+        this.text.SetText(_sbText);
     }
 
     protected abstract void PrintText(StringBuilder sbText);

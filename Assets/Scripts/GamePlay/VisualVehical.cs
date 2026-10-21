@@ -32,7 +32,7 @@ public class VisualVehical : MonoBehaviour
         if (propertyBlock == null) return;
 
         meshRenderers.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetColor("_Color", color);
+        propertyBlock.SetColor(Constans.colorURPRenderer, color);
         meshRenderers.SetPropertyBlock(propertyBlock);
     }
 

@@ -30,7 +30,6 @@ public class VehicleGridPanel
         if (autoCapacityFromLength != null)
             newVehicleCapacity = autoCapacityFromLength(newVehicleLength);
     }
-
     public void DrawGridPreview(LevelData data, float visualMultiplier = 4f)
     {
         GUILayout.Label("Preview Grid (click ô để chọn/thêm xe)", EditorStyles.boldLabel);
@@ -67,31 +66,46 @@ public class VehicleGridPanel
 
                 if (vehicleHere == null)
                 {
-                    // Ô trống: nền nhạt + viền mờ để dễ nhận biết
-                    EditorGUI.DrawRect(cellRect, new Color(1f, 1f, 1f, 0.05f));
-                    DrawVehicleOutline(cellRect, new Color(1f, 1f, 1f, 0.15f), 1f);
+                    EditorGUI.DrawRect(cellRect, new Color(1f, 1f, 1f, 0.06f));
+                    DrawVehicleOutline(cellRect, new Color(1f, 1f, 1f, 0.2f), 1f);
                 }
-
-                if (vehicleHere != null)
+                else
                 {
                     bool selected = vehicleHere.vehicleId == selectedVehicleId;
-                    DrawVehicleOutline(cellRect, selected ? Color.white : Color.gray, selected ? 3f : 2f);
+                    EditorGUI.DrawRect(cellRect, new Color(0.15f, 0.15f, 0.15f, 0.9f));
+                    Color outlineColor = selected ? new Color(1f, 0.85f, 0f) : Color.white;
+                    DrawVehicleOutline(cellRect, outlineColor, selected ? 4f : 2.5f);
 
                     if (vehicleHere.gridPostion == new Vector3Int(x, y, 0))
                     {
-                        GUI.Label(
-                            new Rect(cellRect.x + 2, cellRect.y + 1, cellRect.width, 14),
-                            $"#{vehicleHere.vehicleId}",
-                            new GUIStyle(EditorStyles.miniBoldLabel));
+                        var idStyle = new GUIStyle(EditorStyles.miniBoldLabel) { normal = { textColor = Color.white } };
+                        GUI.Label(new Rect(cellRect.x + 2, cellRect.y + 1, cellRect.width, 14), $"#{vehicleHere.vehicleId}", idStyle);
 
-                        var arrowStyle = new GUIStyle(EditorStyles.boldLabel)
-                        {
-                            alignment = TextAnchor.MiddleCenter,
-                            fontSize = Mathf.Max(12, (int)(cellRect.height * 0.5f)),
-                            normal = { textColor = selected ? Color.white : new Color(0.85f, 0.85f, 0.85f) }
-                        };
-                        GUI.Label(cellRect, GameMechanics.ToSymbol(vehicleHere.direction), arrowStyle);
+                        DrawOutlinedArrow(
+                            cellRect,
+                            GameMechanics.ToSymbol(vehicleHere.direction),
+                            Mathf.Max(14, (int)(cellRect.height * 0.6f)),
+                            selected ? new Color(1f, 0.85f, 0f) : Color.white
+                        );
                     }
+                }
+
+                // --- Xử lý click chuột vào ô ---
+                if (e.type == EventType.MouseDown && e.button == 0 && cellRect.Contains(e.mousePosition))
+                {
+                    if (vehicleHere != null)
+                    {
+                        selectedVehicleId = vehicleHere.vehicleId;
+                        pendingNewVehicleCell = null;
+                    }
+                    else
+                    {
+                        pendingNewVehicleCell = new Vector3Int(x, y, 0);
+                        selectedVehicleId = -1;
+                    }
+
+                    e.Use();
+                    OnChanged?.Invoke();
                 }
             }
         }
@@ -101,6 +115,51 @@ public class VehicleGridPanel
         else if (pendingNewVehicleCell.HasValue)
             DrawAddVehiclePanel(data);
     }
+
+    private void DrawOutlinedArrow(Rect rect, string symbol, int fontSize, Color textColor)
+    {
+        var baseStyle = new GUIStyle(EditorStyles.boldLabel)
+        {
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = fontSize,
+            fontStyle = FontStyle.Bold
+        };
+
+        // 4 lớp đen lệch nhẹ để tạo viền outline quanh chữ, giúp mũi tên nổi trên mọi nền
+        var outlineStyle = new GUIStyle(baseStyle) { normal = { textColor = Color.black } };
+        Vector2[] offsets = { new Vector2(-1, -1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(1, 1) };
+        foreach (var off in offsets)
+        {
+            Rect r = new Rect(rect.x + off.x, rect.y + off.y, rect.width, rect.height);
+            GUI.Label(r, symbol, outlineStyle);
+        }
+
+        // Lớp màu chính đè lên trên cùng
+        var fillStyle = new GUIStyle(baseStyle) { normal = { textColor = textColor } };
+        GUI.Label(rect, symbol, fillStyle);
+    }
+    //private void DrawOutlinedArrow(Rect rect, string symbol, int fontSize, Color textColor)
+    //{
+    //    var baseStyle = new GUIStyle(EditorStyles.boldLabel)
+    //    {
+    //        alignment = TextAnchor.MiddleCenter,
+    //        fontSize = fontSize,
+    //        fontStyle = FontStyle.Bold
+    //    };
+
+    //    // Vẽ 4 lớp đen lệch nhẹ quanh vị trí gốc để tạo viền (outline) cho chữ
+    //    var outlineStyle = new GUIStyle(baseStyle) { normal = { textColor = Color.black } };
+    //    Vector2[] offsets = { new Vector2(-1, -1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(1, 1) };
+    //    foreach (var off in offsets)
+    //    {
+    //        Rect r = new Rect(rect.x + off.x, rect.y + off.y, rect.width, rect.height);
+    //        GUI.Label(r, symbol, outlineStyle);
+    //    }
+
+    //    // Vẽ lớp màu chính đè lên trên cùng
+    //    var fillStyle = new GUIStyle(baseStyle) { normal = { textColor = textColor } };
+    //    GUI.Label(rect, symbol, fillStyle);
+    //}
 
     private void DrawVehicleOutline(Rect rect, Color color, float thickness)
     {

@@ -48,11 +48,13 @@ public class PersonVisual : MonoBehaviour
     public void Setup(Color color, int GroupPesonId)
     {
         colorPerson = color; // gắn mau cho tưng người
+       // Debug.Log("");
 
         this.GroupPesonId = GroupPesonId;
 
+      //  Debug.Log("color "+color +"......."+this.GroupPesonId);
         m_Renderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetColor("_Color", color);
+        propertyBlock.SetColor(Constans.colorURPRenderer, color);
         m_Renderer.SetPropertyBlock(propertyBlock); // set màu cho material
     }
 }

@@ -1,7 +1,11 @@
 ﻿using DG.Tweening;
+using DG.Tweening.Core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UIElements;
 
 public class VehicleController : MonoBehaviour
@@ -26,6 +30,11 @@ public class VehicleController : MonoBehaviour
 
     private static VehicleController vehicleController;
 
+    private void Start()
+    {
+        // Debug.Log("hien thi ra "+ vehicleData.isActive +"ID"+ vehicleData.id+ " "+vehicleData.IsFull);
+        //Debug.Log("da được chon" + isSelected + IsLoading + WaitSelected);
+    }
     public List<Transform> SeatedPassengers { get; private set; } = new List<Transform>();
 
     public void Setup(VehicleState data)
@@ -43,14 +52,14 @@ public class VehicleController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Debug.Log("hien thi ra ten " + gameObject.name);
+      //  Debug.Log("hien thi ra ten " + gameObject.name);
 
-        if (Time.time - lastSelectTime < selectCooldown) return;
+        // if (Time.time - lastSelectTime < selectCooldown) return;
         if (vehicleController != null && vehicleController != this)
             return;
 
-        GameMechanics.ProcessVehicalClick(this); // tthực hiên  khi click vào object
-    }
+        GameMechanics.ProcessVehicalClick(this); // tthực hiên  khi click vào object
+    }
 
     public void SetSelected(bool isSelected)
     {
@@ -67,44 +76,51 @@ public class VehicleController : MonoBehaviour
         if (!IsArrived) return;
         if (IsLoading) return;
 
-        //checkTimer += Time.deltaTime;
-        //if (checkTimer > checkInterval)
-        //{
-        //    checkTimer = 0;
-        //    CheckColorPerson();
+        //checkTimer += Time.deltaTime;
+        //if (checkTimer > checkInterval)
+        //{
+        //    checkTimer = 0;
+        //    CheckColorPerson();
 
-        //}
-        //if (vehicleData.IsFull)
-        //{
-        //    this.transform.DOMove(new Vector2(100, this.transform.position.y), 0.5f);
-        //}
+        //}
+        //if (vehicleData.IsFull)
+        //{
+        //    this.transform.DOMove(new Vector2(100, this.transform.position.y), 0.5f);
+        //}
 
 
-        //if (!WaitSelected)
-        //{
-        //    timeDelay += Time.deltaTime;
-        //    if (timeDelay > timeDelayMax)
-        //    {
-        //        WaitSelected = true;
-        //        timeDelay = 0;
-        //    }
-        //}
+        if (!WaitSelected)
+        {
+            timeDelay += Time.deltaTime;
+            if (timeDelay > timeDelayMax)
+            {
+                WaitSelected = true;
+                timeDelay = 0;
+            }
+        }
+
+
 
     }
 
+
     public bool CheckColorPerson()
     {
+       // Debug.Log($"[CheckColor] Xe {vehicleData.id}: IsLoading={IsLoading}, checkRoutine={(checkRoutine != null)}, IsFull={vehicleData.IsFull}, LinePerson.Count={GameManager.Instance.LinePperson.Count}");
+
+
         if (IsLoading) return false;
         if (checkRoutine != null) return false;
         if (vehicleData.IsFull) return false;
         if (GameManager.Instance.LinePperson.Count == 0) return false;
 
-        //if (GameManager.Instance.CurrentLoadingVehicle != null)
-        //{
-        //    // Nếu không phải chính mình thì không được đón
-        //    if (GameManager.Instance.CurrentLoadingVehicle != this)
-        //        return false;
-        //}
+        if (GameManager.Instance.CurrentLoadingVehicle != null 
+            && GameManager.Instance.CurrentLoadingVehicle != this)
+        {
+            // Nếu không phải chính mình thì không được đón
+      
+                return false;
+        }
 
         if (vehicleController != null && vehicleController != this)
         {
@@ -115,50 +131,55 @@ public class VehicleController : MonoBehaviour
         if (person.ColorPerson != vehicleData.color) return false;
 
         IsLoading = true;
-        // GameManager.Instance.CurrentLoadingVehicle = this;
+        GameManager.Instance.CurrentLoadingVehicle = this;
         vehicleController = this;
         checkRoutine = StartCoroutine(CheckColorPeronRoutine()); // đưa người lên xe
-        return true;
+        return true;
     }
 
-    //public void CheckColorPeron(Transform parkingSlotPos)
-    //{
-    //   StartCoroutine(CheckColorPeronRoutine(parkingSlotPos));
-    //}
+
     private IEnumerator CheckColorPeronRoutine()
     {
         Debug.Log($"hien thi ra {vehicleData.capacity} vaf {vehicleData.currentOccupied}");
-        while (GameManager.Instance.LinePperson.Count > 0 && vehicleData.capacity > vehicleData.currentOccupied)
+        while (GameManager.Instance.LinePperson.Count > 0 && !vehicleData.IsFull)
         {
-            // GameObject firstPersonObj = GameManager.Instance.LinePperson[0];
-            PersonVisual person = GameManager.Instance.LinePperson[0].GetComponentInChildren<PersonVisual>();
-            if (vehicleData.color == person.ColorPerson)
+            //GameObject firstPersonObj = GameManager.Instance.LinePperson[0];
+          //  PersonVisual person = GameManager.Instance.LinePperson[0].GetComponentInChildren<PersonVisual>();
+            
+            if(CurrentSlot == null)
             {
-                Debug.Log("có thể  di chueyern được người");
+                Debug.LogWarning("current bi null ");
+                break;
+            }
+            PersonVisual person = GameManager.Instance.LinePperson[0].GetComponentInChildren<PersonVisual>();
+
+            if (vehicleData.color == person.ColorPerson && CurrentSlot !=null)
+            {
+                Debug.Log("có thể  di chueyern được người");
                 GameManager.Instance.LinePperson.RemoveAt(0);
 
                 GameManager.Instance.UpdateLinePerson();
 
                 vehicleData.GotOnBus();// thuc hien tnawg nguoi
 
-                person.transform.DOKill();
+                person.transform.DOKill();
                 person.transform.DOMove(CurrentSlot.position, 0.5f)
-                    .SetEase(Ease.InQuad); // di chuyen nguoi len xe
-                                           // Debug.Log("hien thi ra persont tra" + person.transform.parent);
+                  .SetEase(Ease.InQuad); // di chuyen nguoi len xe
+                                         // Debug.Log("hien thi ra persont tra" + person.transform.parent);
                 person.transform.parent.SetParent(this.transform);
                 SeatedPassengers.Add(person.transform.parent);
 
-                // Debug.Log("hien thi ra persont tra" + person.transform.parent);
+                // Debug.Log("hien thi ra persont tra" + person.transform.parent);
 
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.1f);
 
             }
             else if (vehicleData.color != person.ColorPerson)
             {
 
-                //yield return null; // khong thực hiện nếu không cung màu
-                //continue;
-                break;
+                yield return null; // khong thực hiện nếu không cung màu
+                //continue;
+                break;
             }
         }
 
@@ -171,21 +192,21 @@ public class VehicleController : MonoBehaviour
             this.transform.DOKill();
 
             Sequence leaveSeq = DOTween.Sequence();
-            // 📌 BƯỚC 1: Di chuyển xe xuống dưới một khoảng (ví dụ: lùi xuống 1.5 đơn vị)
-            leaveSeq.Append(transform.DOMoveY(transform.position.y - 1.5f, 1).SetEase(Ease.OutQuad));
+            // 📌 BƯỚC 1: Di chuyển xe xuống dưới một khoảng (ví dụ: lùi xuống 1.5 đơn vị)
+            leaveSeq.Append(transform.DOMoveY(transform.position.y - 1.5f, 1).SetEase(Ease.OutQuad));
 
-            // 📌 BƯỚC 2: Xoay xe sang phải (Góc 0 độ trên mặt phẳng 2D XY)
-            // Dùng RotateMode.FastBeyond3D hoặc Quaternion để xoay góc mượt mà
-            leaveSeq.Append(transform.DORotate(new Vector3(0, 0, 0), 1, RotateMode.FastBeyond360).SetEase(Ease.InOutQuad));
+            // 📌 BƯỚC 2: Xoay xe sang phải (Góc 0 độ trên mặt phẳng 2D XY)
+            // Dùng RotateMode.FastBeyond3D hoặc Quaternion để xoay góc mượt mà
+            leaveSeq.Append(transform.DORotate(new Vector3(0, 0, 0), 1, RotateMode.FastBeyond360).SetEase(Ease.InOutQuad));
 
-            // 📌 BƯỚC 3: Chạy thẳng ra ngoài bên phải (tăng thời gian lên 2.0s để chạy chậm rãi)
-            leaveSeq.Append(transform.DOMoveX(100f, 2.0f).SetEase(Ease.InQuad));
+            // 📌 BƯỚC 3: Chạy thẳng ra ngoài bên phải (tăng thời gian lên 2.0s để chạy chậm rãi)
+            leaveSeq.Append(transform.DOMoveX(100f, 2.0f).SetEase(Ease.InQuad));
 
             GameManager.Instance.ClearSlot(this.gameObject);
 
             CurrentSlot = null;
             IsArrived = false;
-            //  GameManager.Instance.CurrentLoadingVehicle = null;
+            GameManager.Instance.CurrentLoadingVehicle = null;
             vehicleController = null;
         }
         else
@@ -198,7 +219,7 @@ public class VehicleController : MonoBehaviour
     {
         if (SeatedPassengers.Count == 0) return;
         IsArrived = false; // Tắt flag để Update() không gọi CheckColorPerson() nữa
-        IsLoading = false;
+        IsLoading = false;
 
         if (checkRoutine != null)
         {
@@ -208,28 +229,28 @@ public class VehicleController : MonoBehaviour
 
         for (int i = SeatedPassengers.Count - 1; i >= 0; i--)
         {
-            Transform personObj = SeatedPassengers[i]; // lấy từng person để gắn rồi  đỏi cha
+            Transform personObj = SeatedPassengers[i]; // lấy từng person để gắn rồi  đỏi cha
 
-            if (personObj == null) continue;
+            if (personObj == null) continue;
 
 
             personObj.SetParent(GameManager.Instance.gridManager.HolderPerson);
 
             Debug.Log("nguoi hien tại là" + personObj.name + " " + personObj.parent.name + " " +
-                GameManager.Instance.gridManager.HolderPerson.name);
+              GameManager.Instance.gridManager.HolderPerson.name);
 
             GameManager.Instance.LinePperson.Insert(0, personObj.gameObject);
 
             vehicleData.currentOccupied--;
 
-            //Vector3 targetPos = GameManager.Instance.GetLineSlotPosition(0);
-            //// ví dụ: GameManager.Instance.LineSlots[0].position;
+            //Vector3 targetPos = GameManager.Instance.GetLineSlotPosition(0);
+            // ví dụ: GameManager.Instance.LineSlots[0].position;
 
-            //personObj.DOKill();
-            //personObj.DOMove(targetPos, 0.5f)
-            //    .SetEase(Ease.OutQuad);
+            //personObj.DOKill();
+            //personObj.DOMove(targetPos, 0.5f)
+            //    .SetEase(Ease.OutQuad);
 
-            PersonVisual personVisual = personObj.GetComponentInChildren<PersonVisual>();
+            PersonVisual personVisual = personObj.GetComponentInChildren<PersonVisual>();
             if (personVisual != null)
             {
                 personVisual.transform.DOKill();
@@ -239,7 +260,7 @@ public class VehicleController : MonoBehaviour
         }
 
         SeatedPassengers.Clear(); // xóa danh sách người trong xe
-        GameManager.Instance.UpdateLinePerson(); // cập nhật lại số người
-    }
+        GameManager.Instance.UpdateLinePerson(); // cập nhật lại số người
+    }
 
 }

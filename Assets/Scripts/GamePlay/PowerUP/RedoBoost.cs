@@ -7,8 +7,9 @@ public class RedoBoost : PowerUpBase
     private Stack<ICommand> undoStack = new Stack<ICommand>();
     public bool CanUndo => undoStack.Count > 0;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         BoostType = BoostType.Undo;
     }
     public void ExecuteCommand(ICommand command)
@@ -19,6 +20,7 @@ public class RedoBoost : PowerUpBase
 
     public bool Undo()
     {
+       // undoStack.Count = 0;
         if (!CanUndo) return false;
         ICommand command = undoStack.Pop();
         Debug.Log("thuc hien thuc undo"+undoStack.Count);

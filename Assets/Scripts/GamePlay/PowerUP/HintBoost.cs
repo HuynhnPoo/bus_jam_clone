@@ -9,8 +9,10 @@ public class HintBoost : PowerUpBase
     private int blinkLoops = 5;
     [SerializeField] private Color hintColor = Color.grey;
 
-    private void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         BoostType = BoostType.Hint;
     }
     private VehicleController FindMovableVehicle()
@@ -31,39 +33,44 @@ public class HintBoost : PowerUpBase
         return movableVehicle[Random.Range(0, movableVehicle.Count)];
     }
 
-void BlinkVehicle(VehicleController vehicle)
-{
-    MeshRenderer[] renderers = vehicle.GetComponentsInChildren<MeshRenderer>();
-    if (renderers.Length == 0) return;
 
-    // thuc hien phong to thu nho voi xe
-    Vector3 origanScale=vehicle.transform.localScale;
+    /// <summary>
+    ///  chưa  them  chỉnh lại khi chuyển urp
+    /// </summary>
+    /// <param name="vehicle"></param>
+    void BlinkVehicle(VehicleController vehicle)
+    {
+        MeshRenderer[] renderers = vehicle.GetComponentsInChildren<MeshRenderer>();
+        if (renderers.Length == 0) return;
+
+        // thuc hien phong to thu nho voi xe
+        Vector3 origanScale = vehicle.transform.localScale;
         vehicle.transform.DOKill();
         vehicle.transform.DOScale(origanScale * 1.15f, blinkDuration)
-            .SetLoops(blinkLoops*2,LoopType.Yoyo)
+            .SetLoops(blinkLoops * 2, LoopType.Yoyo)
             .OnComplete(() =>
             {
-                if(vehicle !=null) vehicle.transform.localScale = origanScale;
+                if (vehicle != null) vehicle.transform.localScale = origanScale;
             });
 
-    foreach (var meshRenderer in renderers)
-    {
-        Material material = meshRenderer.material;
-        
-        // Bật Keyword Emission cho Shader nếu chưa bật
-        material.EnableKeyword("_EMISSION");
+        foreach (var meshRenderer in renderers)
+        {
+            Material material = meshRenderer.material;
 
-        // Nhấp nháy màu phát sáng (Emission)
-        material.DOKill();
-        material.DOColor(hintColor, "_EmissionColor", blinkDuration)
-                .SetLoops(blinkLoops * 2, LoopType.Yoyo)
-                .OnComplete(() =>
-                {
-                    if (material != null) 
-                        material.SetColor("_EmissionColor", Color.black);
-                });
+            // Bật Keyword Emission cho Shader nếu chưa bật
+            material.EnableKeyword("_EMISSION");
+
+            // Nhấp nháy màu phát sáng (Emission)
+            material.DOKill();
+            material.DOColor(hintColor, "_EmissionColor", blinkDuration)
+                    .SetLoops(blinkLoops * 2, LoopType.Yoyo)
+                    .OnComplete(() =>
+                    {
+                        if (material != null)
+                            material.SetColor("_EmissionColor", Color.black);
+                    });
+        }
     }
-}
 
     protected override void ExecutePowerUp()
     {
