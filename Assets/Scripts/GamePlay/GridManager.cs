@@ -42,7 +42,7 @@ public class GridManager : MonoBehaviour
 
         whiteSlots = holderSLotParking.GetComponentsInChildren<Transform>()
             .Where(t => t != holderSLotParking)
-            .ToArray();
+            .ToArray();  // lấy các ô  pảking
 
 
         slotOccupants = new GameObject[whiteSlots.Length];
@@ -87,13 +87,14 @@ public class GridManager : MonoBehaviour
 
         foreach (var vehical in Board.vehicles)
         {
-            Vector3 posSpawn = Board.GetPositionWorld(vehical.position.x, vehical.position.y);
-            Quaternion quaternion = GameMechanics.GetRotationWorld(vehical.direction);
+            Vector3 posSpawn = Board.GetPositionWorld(vehical.position.x, vehical.position.y);// sinh ra 
+            Quaternion quaternion = GameMechanics.GetRotationWorld(vehical.direction);// xaoy đâu xe
 
             GameObject obj = Instantiate(tilePrefab[vehical.length - 1], posSpawn, quaternion);
             obj.name = $"vehical {vehical.id}";
 
             VisualVehical visualVehical = obj.GetComponentInChildren<VisualVehical>();
+         //   Debug.Log("gameobject được sinh ra là"+ obj+"null: "+ visualVehical);
 
             VehicleController controller = obj.GetComponent<VehicleController>();
             if (controller == null)

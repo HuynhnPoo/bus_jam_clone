@@ -5,8 +5,17 @@ using UnityEngine;
 
 public class StatusResultsTxt : TextBase
 {
+    public bool isTotalCoin;
     protected override void PrintText(StringBuilder sbText)
     {
-        sbText.Clear().Append(GameManager.Instance.GameResutsStr);
+        if (isTotalCoin)
+        {
+
+            sbText.Clear().Append(GameManager.Instance.totalCoin);
+        }
+        else
+        {
+            sbText.Clear().Append(GameManager.Instance.GameResutsStr);
+        }
     }
 }

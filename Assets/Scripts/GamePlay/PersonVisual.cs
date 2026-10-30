@@ -32,7 +32,7 @@ public struct ColorUtilityBusJam
 
 public class PersonVisual : MonoBehaviour
 {
-    [SerializeField] private MeshRenderer m_Renderer;
+    [SerializeField] private Renderer m_Renderer;
 
     public int GroupPesonId { get; private set; }
     private MaterialPropertyBlock propertyBlock;
@@ -41,7 +41,7 @@ public class PersonVisual : MonoBehaviour
 
     private void Awake()
     {
-        m_Renderer = GetComponent<MeshRenderer>();
+        m_Renderer = GetComponent<Renderer>(); // khai báo rendeer tự nhân mesh ay skin renderer
         propertyBlock = new MaterialPropertyBlock();
     }
 

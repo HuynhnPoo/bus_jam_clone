@@ -17,8 +17,8 @@ public class GameResults : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q)) 
         {
-           // GameManager.isGameOver = true;
-            GameManager.isWon = true;
+            GameManager.isGameOver = true;
+            //GameManager.isWon = true;
         }
 
         if (GameManager.isGameOver)

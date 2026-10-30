@@ -11,6 +11,7 @@ public static class Constans
     public const string newGameKey = "NewGame_Key";
     public const string changeColorKey = "ChangeColor_key";
     public const string undoKey = "Undo_key";
+    public static string coinSaveKey = "CoinSave";
 
 
     //==============Key==============

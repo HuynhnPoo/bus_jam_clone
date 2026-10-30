@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
        // Debug.Log("hien thi"+GameManager.Instance.LevelIndex);
-        LoadLevel(0);
+        LoadLevel(1);
     }
 
     // Update is called once per frame

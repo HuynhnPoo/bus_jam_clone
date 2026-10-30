@@ -42,15 +42,5 @@ public class VisualVehical : MonoBehaviour
         propertyBlock = new MaterialPropertyBlock(); // khoi tạo 
     }
 
-    private Vector3 DirToVector3(MoveDirection d)
-    {
-        return d switch
-        {
-            MoveDirection.Up => Vector3.forward,
-            MoveDirection.Down => Vector3.back,
-            MoveDirection.Left => Vector3.left,
-            MoveDirection.Right => Vector3.right,
-            _ => Vector3.zero
-        };
-    }
+  
 }

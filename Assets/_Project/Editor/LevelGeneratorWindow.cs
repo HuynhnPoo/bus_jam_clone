@@ -14,7 +14,7 @@ public class LevelGeneratorWindow : EditorWindow
     public int time = 60;
     public DifficultyType difficulty = DifficultyType.Easy;
 
-    string savePath = "Assets/SO/Levels";
+    string savePath = "Assets/_Project/SO/Levels";
 
     LevelData previewData;
     bool isSolvable;
@@ -75,7 +75,7 @@ public class LevelGeneratorWindow : EditorWindow
             EditorGUILayout.LabelField($"Số nhóm người: {previewData.personGroups.Count}");
 
             EditorGUILayout.Space(10);
-            panel.DrawGridPreview(previewData, visualMultiplier: 4f);
+            panel.DrawGridPreview(previewData, visualMultiplier: 10f);
             EditorGUILayout.Space(10);
 
             GUI.enabled = isSolvable;

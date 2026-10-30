@@ -19,7 +19,8 @@ public class CoinSpawner : MonoBehaviour
     }
     private void Update()
     {
-       // if (Input.GetKeyDown(KeyCode.S)) Spawn();
+       //
+       //if (Input.GetKeyDown(KeyCode.S)) Spawn();
     }
     // Hàm sinh và di chuyển 20 coin cùng lúc
     public void Spawn()

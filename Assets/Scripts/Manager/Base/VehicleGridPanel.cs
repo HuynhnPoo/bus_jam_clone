@@ -301,7 +301,7 @@ public class VehicleGridPanel
     // chia thành nhiều group nhỏ (4-6 người/group) cho tự nhiên.
     private void RegeneratePersonGroupForVehicle(LevelData data, VehicleData v)
     {
-        Vector3Int slot = GameMechanics.GetWaitSlot(v.gridPostion, v.direction, data.width);
+        Vector3Int slot = GameMechanics.GetWaitSlot(v.gridPostion, v.direction, data.width, data.height);
         RemovePersonGroupsAtSlot(data, v.vehicleId);
 
         if (autoCapacityFromLength != null)

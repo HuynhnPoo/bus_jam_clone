@@ -1,13 +1,20 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinCount : MonoBehaviour
 {
-    int coinCount = 0;
+    int startCoin = 0;
     float delayTime = 0.1f;
 
-   private CoinSpawner coinSpawner;
+
+
+    [Header("time")]
+    float totalDuration = 2f;
+    float elapsedTime = 0f;
+
+    private CoinSpawner coinSpawner;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -18,19 +25,39 @@ public class CoinCount : MonoBehaviour
         StartCoroutine(CountCoinRoutine());
     }
 
-    IEnumerator CountCoinRoutine(){
-        while (coinCount < GameManager.Instance.ReachedCoin)
+    IEnumerator CountCoinRoutine()
+    {
+        while (elapsedTime < totalDuration)
         {
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / totalDuration;
+            int currentCoinValue = Mathf.RoundToInt(Mathf.Lerp(startCoin, GameManager.Instance.ReachedCoin, progress));
 
-            GameMechanics.Add(1);
-           // Debug.Log(1);
-            coinCount++;
+            int coinDelta = currentCoinValue - startCoin;
+            if (coinDelta > 0)
+            {
+                GameMechanics.Add(coinDelta);
+                startCoin = currentCoinValue;
+            }
+            // Debug.Log(1);
+            // startCoin++;
 
-            yield return new WaitForSeconds(delayTime);
+            yield return null;
         }
 
+        //int remainingDelta = GameManager.Instance.ReachedCoin - startCoin;
+        //if(remainingDelta > 0)
+        //{
+        //    GameMechanics.Add(-remainingDelta);
+        //    startCoin = GameManager.Instance.ReachedCoin;
+        //}
         coinSpawner.Spawn();
+
+        GameManager.Instance.totalCoin += GameManager.Instance.ReachedCoin;
+        PlayerPrefs.SetInt(Constans.coinSaveKey, GameManager.Instance.totalCoin);
+        PlayerPrefs.Save();
+
     }
 
-   
+
 }

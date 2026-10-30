@@ -3,6 +3,7 @@ using DG.Tweening.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SocialPlatforms.Impl;
@@ -45,16 +46,18 @@ public class VehicleController : MonoBehaviour
 
     public void SetParkingSlot(Transform slot)
     {
+      //  Debug.Log("slot"+ slot.name);
         CurrentSlot = slot;
-        IsArrived = true;
+        IsArrived = slot != null;
 
     }
 
     private void OnMouseUp()
     {
-      //  Debug.Log("hien thi ra ten " + gameObject.name);
+        //  Debug.Log("hien thi ra ten " + gameObject.name);
 
         // if (Time.time - lastSelectTime < selectCooldown) return;
+        Debug.Log("thông số của xe"+ vehicleData.length+"so ngưởi"+ vehicleData.capacity);
         if (vehicleController != null && vehicleController != this)
             return;
 
@@ -106,7 +109,8 @@ public class VehicleController : MonoBehaviour
 
     public bool CheckColorPerson()
     {
-       // Debug.Log($"[CheckColor] Xe {vehicleData.id}: IsLoading={IsLoading}, checkRoutine={(checkRoutine != null)}, IsFull={vehicleData.IsFull}, LinePerson.Count={GameManager.Instance.LinePperson.Count}");
+        // Debug.Log($"[CheckColor] Xe {vehicleData.id}: IsLoading={IsLoading}, checkRoutine={(checkRoutine != null)}, IsFull={vehicleData.IsFull}, LinePerson.Count={GameManager.Instance.LinePperson.Count}");
+        if (!IsArrived || CurrentSlot == null) return false;
 
 
         if (IsLoading) return false;
@@ -140,80 +144,120 @@ public class VehicleController : MonoBehaviour
 
     private IEnumerator CheckColorPeronRoutine()
     {
-        Debug.Log($"hien thi ra {vehicleData.capacity} vaf {vehicleData.currentOccupied}");
         while (GameManager.Instance.LinePperson.Count > 0 && !vehicleData.IsFull)
         {
-            //GameObject firstPersonObj = GameManager.Instance.LinePperson[0];
-          //  PersonVisual person = GameManager.Instance.LinePperson[0].GetComponentInChildren<PersonVisual>();
-            
-            if(CurrentSlot == null)
-            {
-                Debug.LogWarning("current bi null ");
-                break;
-            }
-            PersonVisual person = GameManager.Instance.LinePperson[0].GetComponentInChildren<PersonVisual>();
+            if (CurrentSlot == null) break;
 
-            if (vehicleData.color == person.ColorPerson && CurrentSlot !=null)
+            GameObject personObject = GameManager.Instance.LinePperson[0];
+
+            if (personObject == null)
             {
-                Debug.Log("có thể  di chueyern được người");
                 GameManager.Instance.LinePperson.RemoveAt(0);
-
                 GameManager.Instance.UpdateLinePerson();
-
-                vehicleData.GotOnBus();// thuc hien tnawg nguoi
-
-                person.transform.DOKill();
-                person.transform.DOMove(CurrentSlot.position, 0.5f)
-                  .SetEase(Ease.InQuad); // di chuyen nguoi len xe
-                                         // Debug.Log("hien thi ra persont tra" + person.transform.parent);
-                person.transform.parent.SetParent(this.transform);
-                SeatedPassengers.Add(person.transform.parent);
-
-                // Debug.Log("hien thi ra persont tra" + person.transform.parent);
-
-                yield return new WaitForSeconds(0.1f);
-
+                continue;
             }
-            else if (vehicleData.color != person.ColorPerson)
-            {
 
-                yield return null; // khong thực hiện nếu không cung màu
-                //continue;
-                break;
-            }
+            PersonVisual person = personObject.GetComponentInChildren<PersonVisual>();
+
+            if (person == null || person.ColorPerson != vehicleData.color)
+                break;
+
+            //Color? oldPersonColor = null;
+            //if (GameManager.Instance.LinePperson.Count > 0)
+            //{
+            //    PersonVisual nextFrontPerson = GameManager.Instance.LinePperson[0].GetComponentInChildren<PersonVisual>();
+            //    oldPersonColor = nextFrontPerson?.ColorPerson;
+            //}
+
+            Transform personRoot = personObject.transform;
+
+            GameManager.Instance.LinePperson.RemoveAt(0);
+            GameManager.Instance.UpdateLinePerson();
+
+            //Color? newPersonColor = null;
+            //if(GameManager.Instance.LinePperson.Count > 0)
+            //{
+            //    PersonVisual nextFrontPerson = GameManager.Instance.LinePperson[0].GetComponentInChildren<PersonVisual>();
+            //    newPersonColor = nextFrontPerson?.ColorPerson;
+            //}
+
+            //if (oldPersonColor != newPersonColor)
+            //{
+            //    GameManager.Instance.NotifyVehicles();
+            //}
+
+            person.transform.DOKill();
+            personRoot.DOKill();
+
+            // Di chuyển object gốc của người lên vị trí xe.
+            Tween boardingTween = personRoot.DOMove(CurrentSlot.position, 0.1f)
+                .SetEase(Ease.InQuad);
+
+            yield return boardingTween.WaitForCompletion();
+
+            // Nếu object bị hủy trong lúc tween, dừng xử lý người này.
+            if (personObject == null || this == null)
+                break;
+
+            // Đổi parent sau khi người đã đến xe.
+            personRoot.SetParent(transform, true);
+
+            SeatedPassengers.Add(personRoot);
+
+            // Chỉ tăng số người sau khi đã lên xe hoàn tất.
+            vehicleData.GotOnBus();
+
+            yield return new WaitForSeconds(0.1f);
         }
 
-        IsLoading = false;
-        checkRoutine = null;
-
+        // Kiểm tra xe đã đủ người chưa
         if (vehicleData.IsFull)
         {
             yield return new WaitForSeconds(0.2f);
-            this.transform.DOKill();
+
+            if (this == null) yield break;
+
+            transform.DOKill();
 
             Sequence leaveSeq = DOTween.Sequence();
-            // 📌 BƯỚC 1: Di chuyển xe xuống dưới một khoảng (ví dụ: lùi xuống 1.5 đơn vị)
-            leaveSeq.Append(transform.DOMoveY(transform.position.y - 1.5f, 1).SetEase(Ease.OutQuad));
 
-            // 📌 BƯỚC 2: Xoay xe sang phải (Góc 0 độ trên mặt phẳng 2D XY)
-            // Dùng RotateMode.FastBeyond3D hoặc Quaternion để xoay góc mượt mà
-            leaveSeq.Append(transform.DORotate(new Vector3(0, 0, 0), 1, RotateMode.FastBeyond360).SetEase(Ease.InOutQuad));
+            leaveSeq.Append(transform.DOMoveY(
+                transform.position.y - 1.5f, 1f)
+                .SetEase(Ease.OutQuad));
 
-            // 📌 BƯỚC 3: Chạy thẳng ra ngoài bên phải (tăng thời gian lên 2.0s để chạy chậm rãi)
-            leaveSeq.Append(transform.DOMoveX(100f, 2.0f).SetEase(Ease.InQuad));
+            leaveSeq.Append(transform.DORotate(
+                new Vector3(-90f, -90f, 90f), 1f)
+                .SetEase(Ease.InOutQuad));
 
-            GameManager.Instance.ClearSlot(this.gameObject);
+            leaveSeq.Append(transform.DOMoveX(100f, 2f)
+                .SetEase(Ease.InQuad));
+
+            // Giải phóng ô đỗ
+            GameManager.Instance.ClearSlot(gameObject);
 
             CurrentSlot = null;
             IsArrived = false;
-            GameManager.Instance.CurrentLoadingVehicle = null;
-            vehicleController = null;
         }
-        else
+
+        // Giải phóng trạng thái đang đón người
+        IsLoading = false;
+        checkRoutine = null;
+
+        if (GameManager.Instance.CurrentLoadingVehicle == this)
+        {
+            GameManager.Instance.CurrentLoadingVehicle = null;
+        }
+
+        if (vehicleController == this)
         {
             vehicleController = null;
         }
+
+        // QUAN TRỌNG:
+        // Kiểm tra lại tất cả xe đã đỗ sau khi nhóm người hiện tại kết thúc.
+        GameManager.Instance.NotifyVehicles();
     }
+
 
     public void ReuturnPassengersToLine()
     {
@@ -254,13 +298,15 @@ public class VehicleController : MonoBehaviour
             if (personVisual != null)
             {
                 personVisual.transform.DOKill();
-                personVisual.transform.DOLocalMove(Vector3.zero, 0.3f);
+                personVisual.transform.DOLocalMove(Vector3.zero, 0.1f);
             }
 
         }
 
         SeatedPassengers.Clear(); // xóa danh sách người trong xe
         GameManager.Instance.UpdateLinePerson(); // cập nhật lại số người
-    }
+
+     //   GameManager.Instance.NotifyVehicles();
+    }
 
 }

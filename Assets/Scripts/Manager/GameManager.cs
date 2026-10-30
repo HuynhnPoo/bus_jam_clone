@@ -48,8 +48,13 @@ public class GameManager : SingletonBase<GameManager>
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoad;
-        //EventManager.Subscribe(EventGameType.GameOver, HanderResultStr);
-        //EventManager.Subscribe(EventGameType.GameWon, HanderResultStr);
+
+        totalCoin = PlayerPrefs.GetInt(Constans.coinSaveKey,0);
+        Debug.Log("toatl coin dduwojc luuw laf "+ totalCoin);
+
+        EventManager.Subscribe(EventGameType.GameOver, HanderResultStr);
+        EventManager.Subscribe(EventGameType.GameWon, HanderResultStr);
+
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode sceneMode)
@@ -61,8 +66,7 @@ public class GameManager : SingletonBase<GameManager>
 
             CanPause = false;
             gridManager = FindFirstObjectByType<GridManager>();
-            EventManager.Subscribe(EventGameType.GameOver, HanderResultStr);
-            EventManager.Subscribe(EventGameType.GameWon, HanderResultStr);
+           
         }
 
         originalCameraPos = Camera.main.transform.localPosition;
@@ -99,6 +103,7 @@ public class GameManager : SingletonBase<GameManager>
             VehicleController controller = slot.GetComponent<VehicleController>();
 
             if (controller == null) continue;
+            if (!controller.IsArrived) continue;
             // controller.CheckColorPerson();
             if (controller.CheckColorPerson()) break;
         }

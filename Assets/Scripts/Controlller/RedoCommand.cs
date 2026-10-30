@@ -28,10 +28,10 @@ public class RedoCommand : ICommand
     public void Execute()
     {
         if (vehicleController == null || isMoving) return;
-       isMoving = true;
+        isMoving = true;
         vehicleController.SetSelected(true);
         GameManager.Instance.gridManager.Board.RemoveVehicleFromBoard(vehicleController.vehicleData.id);
-        GameMechanics.MoveVehicleTween(vehicleController,OnVehicleArrived);
+        GameMechanics.MoveVehicleTween(vehicleController, OnVehicleArrived);
     }
 
     // Được gọi khi tween di chuyển xe hoàn tất và đã biết chính xác slot
@@ -39,7 +39,7 @@ public class RedoCommand : ICommand
     {
         arrivedSlot = slot;
         isMoving = false;
-       // GameManager.Instance.RedoBoost.AddQuantity();
+        // GameManager.Instance.RedoBoost.AddQuantity();
         // Lưu lại người hiện đang ở trong xe tại thời điểm đỗ (nếu có)
         // vehicleController = new List<GameObject>(vehicleController.GetPassengers());
     }
@@ -47,7 +47,7 @@ public class RedoCommand : ICommand
 
     public void Undo()
     {
-        if (vehicleController == null && isMoving) return;
+        if (vehicleController == null || isMoving) return;
         vehicleController.DOKill();
 
         vehicleController.ReuturnPassengersToLine(); // trả người về hàng
@@ -55,7 +55,7 @@ public class RedoCommand : ICommand
         int slotIndex = GetSlotIndex(); // nhận ô xe vừa di chuyển ra để rồi clear nó
 
         if (slotIndex != -1) GameManager.Instance.gridManager.slotOccupants[slotIndex] = null;
-    
+
         vehicleController.SetParkingSlot(null); // xóa thông tin xe
 
         // di chuyển xe
