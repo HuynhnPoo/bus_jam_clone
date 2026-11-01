@@ -146,39 +146,39 @@ MonoBehaviour:
     slotPosition: {x: 5, y: 6, z: 0}
     ownerVehicleId: 0
   - groupPersonId: 1
-    Count: 5
+    Count: 6
     slotPosition: {x: 1, y: 6, z: 0}
     ownerVehicleId: 1
   - groupPersonId: 2
-    Count: 1
-    slotPosition: {x: 1, y: 6, z: 0}
-    ownerVehicleId: 1
-  - groupPersonId: 3
     Count: 4
     slotPosition: {x: -1, y: 1, z: 0}
     ownerVehicleId: 2
+  - groupPersonId: 3
+    Count: 6
+    slotPosition: {x: 5, y: -1, z: 0}
+    ownerVehicleId: 3
   - groupPersonId: 4
-    Count: 5
+    Count: 2
     slotPosition: {x: 5, y: -1, z: 0}
     ownerVehicleId: 3
   - groupPersonId: 5
-    Count: 3
-    slotPosition: {x: 5, y: -1, z: 0}
-    ownerVehicleId: 3
-  - groupPersonId: 6
     Count: 4
     slotPosition: {x: 6, y: 4, z: 0}
     ownerVehicleId: 4
-  - groupPersonId: 7
+  - groupPersonId: 6
     Count: 4
     slotPosition: {x: 4, y: -1, z: 0}
     ownerVehicleId: 5
-  - groupPersonId: 8
+  - groupPersonId: 7
     Count: 4
     slotPosition: {x: 5, y: -1, z: 0}
     ownerVehicleId: 6
+  - groupPersonId: 8
+    Count: 4
+    slotPosition: {x: 4, y: -1, z: 0}
+    ownerVehicleId: 7
   - groupPersonId: 9
-    Count: 6
+    Count: 2
     slotPosition: {x: 4, y: -1, z: 0}
     ownerVehicleId: 7
   - groupPersonId: 10
@@ -198,11 +198,11 @@ MonoBehaviour:
     slotPosition: {x: 4, y: 6, z: 0}
     ownerVehicleId: 10
   - groupPersonId: 14
-    Count: 6
+    Count: 5
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 11
   - groupPersonId: 15
-    Count: 2
+    Count: 3
     slotPosition: {x: -1, y: 0, z: 0}
     ownerVehicleId: 11
   - groupPersonId: 16
@@ -238,11 +238,11 @@ MonoBehaviour:
     slotPosition: {x: -1, y: 2, z: 0}
     ownerVehicleId: 18
   - groupPersonId: 24
-    Count: 5
+    Count: 4
     slotPosition: {x: 3, y: -1, z: 0}
     ownerVehicleId: 19
   - groupPersonId: 25
-    Count: 1
+    Count: 2
     slotPosition: {x: 3, y: -1, z: 0}
     ownerVehicleId: 19
   - groupPersonId: 26
