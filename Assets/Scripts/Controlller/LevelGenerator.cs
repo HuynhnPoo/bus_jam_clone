@@ -24,8 +24,6 @@ public class LevelGenerator
     {
         width = Mathf.Max(2, gridWidth);
         height = Mathf.Max(2, gridHeight);
-        minCapacity = Mathf.Max(1, minCap);
-        maxCapacity = Mathf.Max(minCapacity, maxCap);
     }
 
     public LevelData GenerateLevelData(int levelIndex)
@@ -109,14 +107,10 @@ public class LevelGenerator
 
             int len = s.cells.Count;
 
-            // TÍNH SỨC CHỨA: Đảm bảo luôn là số chẵn (2, 4, 6, 8) theo độ dài xe
-            int capacity = len switch
-            {
-                1 => 4, // 2 hoặc 4 người cho xe 1 ô
-                2 => 6, // 4 hoặc 6 người cho xe 2 ô
-                _ => 8  // 6 hoặc 8 người cho xe 3 ô
-            };
-            capacity = Mathf.Clamp(capacity, minCapacity, maxCapacity);
+            int capacity = VehicleCapacityRules.GetCapacity(len);
+
+            if (capacity <= 0)
+                continue;
 
             vehicles.Add(new VehicleData
             {
@@ -186,76 +180,52 @@ public class LevelGenerator
         }
         return true;
     }
-
     private void GenerateBalancedPeople()
     {
-        // 1. Tạo danh sách các nhóm người cơ bản dựa theo xe (giống như trước để đảm bảo đủ tổng số người)
-        List<int> groupCounts = new List<int>();
+        personGroups = new List<PersonGroupData>();
+        int groupPersonIdCounter = 0;
+
         foreach (var v in vehicles)
         {
-            groupCounts.Add(v.capacity);
-        }
-
-        int totalPersonsNeeded = groupCounts.Sum();
-
-        // 2. Phân phối lại số lượng ngẫu nhiên (chẵn, từ 4 đến 10) nhưng vẫn giữ nguyên tổng số người
-        List<int> randomizedCounts = new List<int>();
-        int currentSum = 0;
-
-        for (int i = 0; i < vehicles.Count; i++)
-        {
-            if (i == vehicles.Count - 1)
-            {
-                // Nhóm cuối cùng nhận phần số lượng còn thiếu để khớp tổng số người của màn chơi
-                int remaining = totalPersonsNeeded - currentSum;
-                // Đảm bảo số lượng cuối cùng vẫn là số chẵn và nằm trong khoảng [4, 10] (nếu có thể)
-                remaining = Mathf.Clamp(remaining, 4, 10);
-                if (remaining % 2 != 0) remaining = Mathf.Max(4, remaining - 1); // Bắt buộc chẵn
-
-                // Nếu vì ép chẵn mà lệch tổng, ta chấp nhận điều chỉnh nhẹ ở xe cuối cùng
-                randomizedCounts.Add(remaining);
-            }
-            else
-            {
-                // Random ngẫu nhiên các số chẵn từ 4 đến 10: 4, 6, 8, 10
-                int randomCount = Random.Range(2, 6) * 2; // Tạo ra 4, 6, 8, hoặc 10
-
-                // Đảm bảo không lấy quá nhiều khiến các xe sau không đủ người hoặc bị âm
-                int maxAllowed = totalPersonsNeeded - currentSum - (vehicles.Count - 1 - i) * 4;
-                int minAllowed = 4;
-
-                if (maxAllowed < minAllowed) maxAllowed = minAllowed;
-                randomCount = Mathf.Clamp(randomCount, minAllowed, Mathf.Min(10, maxAllowed));
-                if (randomCount % 2 != 0) randomCount--;
-
-                randomizedCounts.Add(randomCount);
-                currentSum += randomCount;
-            }
-        }
-
-        // Nếu tổng sau khi random bị lệch so với tổng sức chứa xe, ta bù trừ vào nhóm đầu tiên cho khớp hoàn toàn
-        int diff = totalPersonsNeeded - randomizedCounts.Sum();
-        if (diff != 0 && randomizedCounts.Count > 0)
-        {
-            randomizedCounts[0] += diff;
-            // Đảm bảo nhóm đầu tiên sau khi bù vẫn là số chẵn và >= 4
-            if (randomizedCounts[0] < 4) randomizedCounts[0] = 4;
-            if (randomizedCounts[0] % 2 != 0) randomizedCounts[0] += (diff > 0 ? 1 : -1);
-        }
-
-        // 3. Tạo dữ liệu PersonGroupData dựa trên danh sách số lượng đã xáo trộn ngẫu nhiên
-        for (int i = 0; i < vehicles.Count; i++)
-        {
-            var v = vehicles[i];
+            // QUAN TRỌNG: Tổng số người thuộc xe này PHẢI BẰNG CHÍNH XÁC v.capacity 
+            // để xe có thể chở hết người và rời đi, không bị kẹt hay thừa người.
+            int remainingCapacity = v.capacity;
             Vector3Int waitSlot = GameMechanics.GetWaitSlot(v.gridPostion, v.direction, width, height);
 
-            personGroups.Add(new PersonGroupData
+            // Chia capacity thành các nhóm người nhỏ hơn (ví dụ: nhóm 4, 6, 8)
+            while (remainingCapacity > 0)
             {
-                groupPersonId = i,
-                Count = randomizedCounts[i], // Sử dụng số lượng ngẫu nhiên (chẵn từ 4 đến 10)
-                slotPosition = waitSlot,
-                ownerVehicleId = v.vehicleId
-            });
+                int groupCount;
+
+                if (remainingCapacity >= 8)
+                    groupCount = 8;
+                else if (remainingCapacity >= 6)
+                    groupCount = 6;
+                else if (remainingCapacity >= 4)
+                    groupCount = 4;
+                else
+                    groupCount = remainingCapacity;
+
+                // Đảm bảo luôn là số chẵn
+                if (groupCount % 2 != 0)
+                    groupCount = Mathf.Max(2, groupCount - 1);
+
+                // Nhóm cuối cùng gom nốt phần còn lại để khớp hoàn toàn capacity của xe
+                if (remainingCapacity - groupCount < 4 && remainingCapacity - groupCount > 0)
+                {
+                    groupCount = remainingCapacity;
+                }
+
+                personGroups.Add(new PersonGroupData
+                {
+                    groupPersonId = groupPersonIdCounter++,
+                    Count = groupCount,
+                    slotPosition = waitSlot,
+                    ownerVehicleId = v.vehicleId
+                });
+
+                remainingCapacity -= groupCount;
+            }
         }
     }
 

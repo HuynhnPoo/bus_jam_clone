@@ -9,18 +9,20 @@ using UnityEngine.UI;
 public class UIManager : SingletonBase<UIManager>
 {
     [SerializeField] private GameObject pausePanelGO;
-    [SerializeField] private GameObject statusPanelGO;
+    [SerializeField] private GameObject second_UIGO;
 
     [SerializeField] private GameObject thirdUI_GO;
     public GameObject PausePanelGO => pausePanelGO;
-    public GameObject StatusPanelGO => statusPanelGO;
+    public GameObject Second_UIGO => second_UIGO;
+    public GameObject ThirdUI_GO => thirdUI_GO;
 
     [SerializeField] private GameObject playGame;
 
     public enum SceneType
     {
         MainMenu,
-        GamePlay
+        GamePlay,
+        LevelMenu,
     }
 
     private void OnEnable()
@@ -63,7 +65,7 @@ public class UIManager : SingletonBase<UIManager>
     public void Setup(GameObject pausePanelGO = null, GameObject statusPanelGO = null,GameObject thirdUI_GO=null)
     {
         this.pausePanelGO = pausePanelGO;
-        this.statusPanelGO = statusPanelGO;
+        this.second_UIGO = statusPanelGO;
         this.thirdUI_GO = thirdUI_GO;
 
     }
@@ -79,7 +81,7 @@ public class UIManager : SingletonBase<UIManager>
     public void Resume() => PausePanelGO.SetActive(false);
 
     public void ShowResultGame()
-    { statusPanelGO.SetActive(true); }
+    { this.second_UIGO.SetActive(true); }
 
     public void ActiveNextLevel()
     { if (GameManager.isWon) this.thirdUI_GO.SetActive(true); }

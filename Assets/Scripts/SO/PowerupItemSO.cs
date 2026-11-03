@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PowerupItemSO : ScriptableObject
 {
     public string namePowerup;
-    public Image imgPower;
+    public Sprite imgPowerup;
     public BoostType BoostType;
     public int price;
     public int amount = 1;

@@ -46,7 +46,7 @@ public class VehicleController : MonoBehaviour
 
     public void SetParkingSlot(Transform slot)
     {
-      //  Debug.Log("slot"+ slot.name);
+        //  Debug.Log("slot"+ slot.name);
         CurrentSlot = slot;
         IsArrived = slot != null;
 
@@ -57,7 +57,7 @@ public class VehicleController : MonoBehaviour
         //  Debug.Log("hien thi ra ten " + gameObject.name);
 
         // if (Time.time - lastSelectTime < selectCooldown) return;
-        Debug.Log("thông số của xe"+ vehicleData.length+"so ngưởi"+ vehicleData.capacity);
+        Debug.Log("thông số của xe" + vehicleData.length + "so ngưởi" + vehicleData.capacity);
         if (vehicleController != null && vehicleController != this)
             return;
 
@@ -118,12 +118,12 @@ public class VehicleController : MonoBehaviour
         if (vehicleData.IsFull) return false;
         if (GameManager.Instance.LinePperson.Count == 0) return false;
 
-        if (GameManager.Instance.CurrentLoadingVehicle != null 
+        if (GameManager.Instance.CurrentLoadingVehicle != null
             && GameManager.Instance.CurrentLoadingVehicle != this)
         {
-            // Nếu không phải chính mình thì không được đón
-      
-                return false;
+            // Nếu không phải chính mình thì không được đón
+
+            return false;
         }
 
         if (vehicleController != null && vehicleController != this)
@@ -232,6 +232,13 @@ public class VehicleController : MonoBehaviour
             leaveSeq.Append(transform.DOMoveX(100f, 2f)
                 .SetEase(Ease.InQuad));
 
+            leaveSeq.OnComplete(
+                () =>
+                {
+                    GameManager.Instance.CurrentVehicle.Remove(this.gameObject);
+                    if (GameManager.Instance.CurrentVehicle.Count == 0 && GameManager.Instance.LinePperson.Count == 0)
+                        GameManager.isWon = true;
+                });
             // Giải phóng ô đỗ
             GameManager.Instance.ClearSlot(gameObject);
 
@@ -306,7 +313,7 @@ public class VehicleController : MonoBehaviour
         SeatedPassengers.Clear(); // xóa danh sách người trong xe
         GameManager.Instance.UpdateLinePerson(); // cập nhật lại số người
 
-     //   GameManager.Instance.NotifyVehicles();
+        //   GameManager.Instance.NotifyVehicles();
     }
 
 }

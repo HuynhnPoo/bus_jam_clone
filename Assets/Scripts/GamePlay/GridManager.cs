@@ -32,6 +32,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform[] whiteSlots = new Transform[5];
     public Transform[] WhiteSlots => whiteSlots;
     public GameObject[] slotOccupants { private set; get; }
+    public LevelManager levelManager {  set; get; }
 
     public Vector3 posFirtsPerson;
 
@@ -43,7 +44,7 @@ public class GridManager : MonoBehaviour
         whiteSlots = holderSLotParking.GetComponentsInChildren<Transform>()
             .Where(t => t != holderSLotParking)
             .ToArray();  // lấy các ô  pảking
-
+        levelManager= GetComponent<LevelManager>();
 
         slotOccupants = new GameObject[whiteSlots.Length];
         posFirtsPerson = holderPerson.transform.position;
@@ -105,7 +106,7 @@ public class GridManager : MonoBehaviour
             controller.Setup(vehical);
 
             visualVehical.SetupVehicle(vehical.color);
-
+            GameManager.Instance.CurrentVehicle.Add(obj);
         }
     }
 

@@ -15,6 +15,7 @@ public class SwitcheToggle : MonoBehaviour
     [SerializeField] private Sprite offSprite; // Hình nền khi tắt
     [SerializeField] private Sprite onSprite;  // Hình nền khi bật
 
+    [Range(-50,50)]
     [SerializeField] private float offsetPositionX = 25f; // Tọa độ X khi tắt (bên trái)
    // [SerializeField] private float onPositionX = 25f;
 
@@ -24,7 +25,7 @@ public class SwitcheToggle : MonoBehaviour
     {
         toggle = GetComponent<Toggle>();
         toggle.onValueChanged.AddListener(OnToggleChanged);
-
+        OnToggleChanged(toggle.isOn);
     }
 
     public void OnToggleChanged(bool isOn)
@@ -33,6 +34,8 @@ public class SwitcheToggle : MonoBehaviour
         Vector2 newPos = posCheckMark.anchoredPosition;
         newPos.x = targetX;
         posCheckMark.anchoredPosition = newPos;
+
+        backgoundImg.sprite = isOn ? onSprite : offSprite;
     }
     // Update is called once per frame
     void Update()

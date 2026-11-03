@@ -6,17 +6,14 @@ public class RefManager : MonoBehaviour
 {
     // Panel chính thứ nhất (Ví dụ: Main Menu hoặc Shop Items)
     [Tooltip("")]
-    [SerializeField] private GameObject first_UIGO; 
+    [SerializeField] private GameObject first_UIGO;   // game play pause
+                                                      //main menu button new game
 
-    // game play pause
-    //main menu
+    [SerializeField] private GameObject second_UIGO;// game play status reulst game
+                                                    //main menu panel shop
 
+    [SerializeField] private GameObject thirdUI_GO;  //main menu panel shop
 
-    [SerializeField] private GameObject second_UIGO;
-    // game play status reulst game
-    //main menu
-
-    [SerializeField] private GameObject thirdUI_GO;
 
     private void Awake()
     {

@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57a80b5b4d3958f4bb97dab5844649e8, type: 3}
-  m_Name: PowerupData
+  m_Name: UndoSO
   m_EditorClassIdentifier: 
-  BoostType: 1
+  namePowerup: 
+  imgPowerup: {fileID: -1285999176, guid: 48e869ac6f47ff842a7a2c894f00b44b, type: 3}
+  BoostType: 3
   price: 1000
   amount: 1

@@ -26,5 +26,10 @@ public class GameResults : MonoBehaviour
             EventManager.Notify(EventGameType.GameOver);
         }
         if (GameManager.isWon) EventManager.Notify(EventGameType.GameWon);
+
+        //if (GameManager.Instance.LinePperson.Count == 0 && GameManager.Instance.CurrentVehicle.Count==0)
+        //{
+        //    GameManager.isWon = true;
+        //}
     }
 }

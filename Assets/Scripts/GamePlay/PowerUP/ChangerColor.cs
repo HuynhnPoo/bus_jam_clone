@@ -1,111 +1,121 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class ChangerColor : PowerUpBase
 {
-    private int amout = 1;
-    private PersonVisual _personVisual;
-
     protected override void Awake()
     {
         base.Awake();
         BoostType = BoostType.ColorChange;
     }
 
-    //public void SetPersonVisual(PersonVisual personVisual)
-    //{
-    //    this._personVisual = personVisual;
-    //}
-
     protected override void ExecutePowerUp()
     {
-        Debug.Log("ham any thưc hien dược");
-        List<GameObject> firstGroup = GetFirstPersonGroup();
-        if (firstGroup.Count == 0) return;
+        Debug.Log("Thực hiện đổi sang màu khác cho các nhóm trong hàng chờ.");
 
-        VehicleState targetVehicle = GetVehiclesStateForColorChange();
-
-        Color newColor =targetVehicle.color;
-        int newGroupId = targetVehicle.id;
-
-        Debug.Log($"mau {newColor} {newGroupId}");
-        
-        foreach (GameObject group in firstGroup) 
-        {
-            //Debug.Log($"{group.name}");
-            if (group == null) continue;
-            PersonVisual personVisual = group.GetComponentInChildren<PersonVisual>();
-
-            if (personVisual == null) return;
-           //  Debug.Log("danh sach nguowi ddoior teen "+ personVisual.name);
-            personVisual.Setup(newColor, newGroupId);
-        }
-    }
-    private VehicleState GetVehiclesStateForColorChange()
-    {
-        if (GameManager.Instance == null || GameManager.Instance.gridManager == null) return null;
+        if (GameManager.Instance == null || GameManager.Instance.gridManager == null) return;
 
         GridManager gridManager = GameManager.Instance.gridManager;
-        if (gridManager.Board == null || gridManager.Board.vehicles == null) return null;
+        if (gridManager.Board == null || gridManager.Board.vehicles == null) return;
 
         List<VehicleState> availableVehicles = gridManager.Board.vehicles;
-        if (availableVehicles.Count == 0) return null;
+        if (availableVehicles.Count == 0) return;
 
-        // 1. Lấy ID nhóm người hiện tại ở đầu hàng
-        List<GameObject> firstGroup = GetFirstPersonGroup();
-        if (firstGroup.Count == 0) return null;
+        // 1. Lấy tất cả các nhóm người đang xếp hàng theo từng block liên tiếp
+        List<List<GameObject>> allGroups = GetAllPersonGroups();
+        if (allGroups.Count == 0) return;
 
-        PersonVisual firstPersonVisual = firstGroup[0].GetComponentInChildren<PersonVisual>();
-        if (firstPersonVisual == null) return null;
-
-        int currentGroupId = firstPersonVisual.GroupPesonId;
-
-        // 2. Lọc ra các xe KHÁC màu với nhóm người hiện tại
-        // Đồng thời đảm bảo sau khi đổi, vẫn còn xe (hoặc nhóm xe) mang màu đó trên bàn để người dân lên xe
-        foreach (VehicleState vehicle in availableVehicles)
+        // 2. Duyệt qua từng nhóm và đổi sang màu KHÁC với màu hiện tại của chúng (dùng offset dịch chuyển)
+        for (int i = 0; i < allGroups.Count; i++)
         {
-            if (vehicle == null) continue;
+            if (allGroups[i].Count == 0) continue;
 
-            // Bỏ qua nếu xe này trùng màu với nhóm người hiện tại
-            if (vehicle.id == currentGroupId) continue;
+            // Lấy ID màu hiện tại của nhóm này
+            PersonVisual firstPersonInGroup = allGroups[i][0].GetComponentInChildren<PersonVisual>();
+            int currentGroupId = firstPersonInGroup != null ? firstPersonInGroup.GroupPesonId : -1;
 
-            // Kiểm tra xem trên board có thực sự tồn tại xe này hoặc còn xe để đi không
-            // (Bạn có thể thêm điều kiện đếm số lượng xe cùng loại nếu cần thiết)
-            // Ở đây chúng ta ưu tiên chọn chiếc xe khác màu đầu tiên tìm thấy
-            return vehicle;
+            // Dùng phép dịch chuyển (i + 1) để đảm bảo nhóm không bị giữ nguyên màu cũ (nếu có từ 2 xe trở lên)
+            int candidateIndex = (i + 1) % availableVehicles.Count;
+            VehicleState targetVehicle = availableVehicles[candidateIndex];
+
+            // Nếu xe được chọn vẫn trùng màu cũ, dịch tiếp sang xe kế tiếp
+            if (availableVehicles.Count > 1 && targetVehicle.id == currentGroupId)
+            {
+                candidateIndex = (candidateIndex + 1) % availableVehicles.Count;
+                targetVehicle = availableVehicles[candidateIndex];
+            }
+
+            if (targetVehicle == null) targetVehicle = availableVehicles[0];
+
+            Color newColor = targetVehicle.color;
+            int newGroupId = targetVehicle.id;
+
+            // Cập nhật màu và ID mới cho toàn bộ người trong nhóm này
+            foreach (GameObject person in allGroups[i])
+            {
+                if (person == null) continue;
+                PersonVisual personVisual = person.GetComponentInChildren<PersonVisual>();
+                if (personVisual != null)
+                {
+                    personVisual.Setup(newColor, newGroupId);
+                }
+            }
         }
 
-        // Nếu không tìm thấy xe nào khác màu hợp lệ, fallback về xe đầu tiên
-        return availableVehicles.FirstOrDefault();
+        Debug.Log("Đã đổi màu các nhóm thành công!");
     }
 
-    public List<GameObject> GetFirstPersonGroup()
+    /// <summary>
+    /// Phân tách toàn bộ hàng chờ LinePperson thành các danh sách con (các nhóm người đứng liên tiếp có cùng GroupPesonId)
+    /// </summary>
+    public List<List<GameObject>> GetAllPersonGroups()
     {
-        List<GameObject> group = new List<GameObject>();
+        List<List<GameObject>> allGroups = new List<List<GameObject>>();
         List<GameObject> line = GameManager.Instance.LinePperson;
 
-        PersonVisual firstPersonVisual = line[0].GetComponentInChildren<PersonVisual>();
-        if (firstPersonVisual == null) return group;
+        if (line == null || line.Count == 0) return allGroups;
 
-        int targetGroupId = firstPersonVisual.GroupPesonId;
+        List<GameObject> currentGroup = new List<GameObject>();
+        int currentId = -1;
+
         foreach (GameObject person in line)
         {
-            if (person == null) break;
+            if (person == null) continue;
 
-           PersonVisual personVisual = person.GetComponentInChildren<PersonVisual>();
-            if (personVisual != null && personVisual.GroupPesonId == targetGroupId)
+            PersonVisual personVisual = person.GetComponentInChildren<PersonVisual>();
+            if (personVisual == null) continue;
+
+            if (currentGroup.Count == 0)
             {
-                group.Add(person);
+                currentId = personVisual.GroupPesonId;
+                currentGroup.Add(person);
             }
             else
             {
-                break;
+                // Nếu cùng ID nhóm thì gộp chung vào 1 nhóm
+                if (personVisual.GroupPesonId == currentId)
+                {
+                    currentGroup.Add(person);
+                }
+                else
+                {
+                    // Khác ID thì lưu nhóm cũ lại và bắt đầu nhóm mới
+                    allGroups.Add(new List<GameObject>(currentGroup));
+                    currentGroup.Clear();
+                    currentId = personVisual.GroupPesonId;
+                    currentGroup.Add(person);
+                }
             }
         }
-        return group;
-    }
 
+        // Thêm nhóm cuối cùng vào danh sách
+        if (currentGroup.Count > 0)
+        {
+            allGroups.Add(currentGroup);
+        }
+
+        return allGroups;
+    }
 }

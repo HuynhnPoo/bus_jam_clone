@@ -7,8 +7,8 @@ public class LevelGeneratorWindow : EditorWindow
     int gridWidth = 6;
     int gridHeight = 6;
     int vehicleCount = 8;
-    int minCapacity = 10;
-    int maxCapacity = 15;
+    int minCapacity = 4;
+    int maxCapacity = 8;
 
     public int levelIndex = 1;
     public int time = 60;
@@ -30,7 +30,9 @@ public class LevelGeneratorWindow : EditorWindow
 
     private void OnEnable()
     {
-        panel = new VehicleGridPanel(autoCapacityFromLength: null);
+        // panel = new VehicleGridPanel(autoCapacityFromLength: null);
+        panel = new VehicleGridPanel(VehicleCapacityRules.GetCapacity);
+
         panel.OnChanged += HandleChanged;
     }
 
@@ -48,8 +50,8 @@ public class LevelGeneratorWindow : EditorWindow
         gridWidth = EditorGUILayout.IntField("Grid Width", gridWidth);
         gridHeight = EditorGUILayout.IntField("Grid Height", gridHeight);
         vehicleCount = EditorGUILayout.IntSlider("Vehicle Count", vehicleCount, 2, 30);
-        minCapacity = EditorGUILayout.IntSlider("Min Capacity", minCapacity, 5, 20);
-        maxCapacity = EditorGUILayout.IntSlider("Max Capacity", maxCapacity, minCapacity, 25);
+        //minCapacity = EditorGUILayout.IntSlider("Min Capacity", minCapacity, 5, 20);
+        //maxCapacity = EditorGUILayout.IntSlider("Max Capacity", maxCapacity, minCapacity, 25);
 
         EditorGUILayout.Space(10);
         GUILayout.Label("Thông tin file", EditorStyles.boldLabel);

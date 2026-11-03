@@ -34,6 +34,7 @@ public class GameManager : SingletonBase<GameManager>
     [Header("system")]
     public VehicleController CurrentLoadingVehicle;
     private static List<GameObject> linePperson = new List<GameObject>();
+    private static List<GameObject> currentVehicle = new List<GameObject>();
 
     [Header("Setting Shake Camera")]
     [Range(10, 20)]
@@ -42,6 +43,7 @@ public class GameManager : SingletonBase<GameManager>
 
     private Vector3 originalCameraPos;
 
+    public List<GameObject> CurrentVehicle { get => currentVehicle; set => currentVehicle = value; }
     public List<GameObject> LinePperson { get => linePperson; set => linePperson = value; }
     // public int OnLoadScene { get; private set; }
 
@@ -49,8 +51,8 @@ public class GameManager : SingletonBase<GameManager>
     {
         SceneManager.sceneLoaded += OnSceneLoad;
 
-        totalCoin = PlayerPrefs.GetInt(Constans.coinSaveKey,0);
-        Debug.Log("toatl coin dduwojc luuw laf "+ totalCoin);
+        totalCoin = PlayerPrefs.GetInt(Constans.coinSaveKey, 0);
+        Debug.Log("toatl coin dduwojc luuw laf " + totalCoin);
 
         EventManager.Subscribe(EventGameType.GameOver, HanderResultStr);
         EventManager.Subscribe(EventGameType.GameWon, HanderResultStr);
@@ -66,7 +68,7 @@ public class GameManager : SingletonBase<GameManager>
 
             CanPause = false;
             gridManager = FindFirstObjectByType<GridManager>();
-           
+
         }
 
         originalCameraPos = Camera.main.transform.localPosition;

@@ -8,7 +8,7 @@ public class NewGameBtn : ButtonBase
     {
         GameManager.NewGame = PlayerPrefs.GetInt(Constans.newGameKey, 0) == 1;
         Debug.Log("hien thi ra game moiw" + GameManager.NewGame);
-        Debug.Log(UIManager.Instance.PausePanelGO.name + "la tên game đọc bật lên");
+     //s   Debug.Log(UIManager.Instance.PausePanelGO.name + "la tên game đọc bật lên");
         if (GameManager.NewGame)
         {
             UIManager.Instance.PausePanelGO.SetActive(false);
@@ -21,7 +21,6 @@ public class NewGameBtn : ButtonBase
     protected override void OnClick()
     {
        
-          
         if (GameManager.NewGame)
         {
             GameManager.NewGame = false;

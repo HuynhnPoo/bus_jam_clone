@@ -45,7 +45,8 @@ public class Board
         for (int i = 0; i < data.vehicles.Count; i++)
         {
             var v = data.vehicles[i];
-            Color assignedColor = randomColors[v.vehicleId % randomColors.Count];
+           // Color assignedColor = randomColors[v.vehicleId % randomColors.Count];
+            Color assignedColor = randomColors[i];
             var state = new VehicleState
             {
                 id = v.vehicleId,
@@ -162,71 +163,111 @@ public class Board
         return result;
     }
 
-    public bool TryMoveVehicle(int vehicleId, out int cellsMoved)
+    public bool TryMoveVehicle(int vehicleId, out int progress)
     {
-        cellsMoved = 0;
-        var v = vehicles.FirstOrDefault(x => x.id == vehicleId && x.isActive);
-        if (v == null) return false;
+        progress = 0;
+
+        VehicleState v = vehicles.FirstOrDefault(
+            x => x.id == vehicleId && x.isActive
+        );
+
+        if (v == null)
+            return false;
+
+        // Quan trọng: xe chỉ được đi khi toàn bộ đường phía trước thông thoáng.
+        if (!CheckIfPathIsClear(v))
+            return false;
 
         Vector3Int delta = GameMechanics.ToDelta(v.direction);
 
+        // Xóa vị trí cũ của xe khỏi grid trước khi mô phỏng di chuyển.
         foreach (var c in GetOccupiedCells(v))
-            if (InBounds(c)) cells[c.x, c.y] = CellState.Empty;
+        {
+            if (InBounds(c))
+                cells[c.x, c.y] = CellState.Empty;
+        }
 
         Vector3Int cur = v.position;
-        bool moved = false;
 
         while (true)
         {
             Vector3Int next = cur + delta;
 
+            // Xe đã đến cửa thoát.
             if (!InBounds(next))
             {
-                // Đón khách đang chờ ngay ngoài mép (waitSlot) TRƯỚC khi quyết định thoát
+                int previousOccupied = v.currentOccupied;
+
+                // Chỉ nhận người thuộc về xe này.
                 TryBoardPassengers(v, next);
+
+                // Ghi nhận cả số người vừa lên xe là một tiến triển.
+                progress += v.currentOccupied - previousOccupied;
 
                 if (v.currentOccupied >= v.capacity)
                 {
                     v.isActive = false;
-                    moved = true;
+
+                    // Đảm bảo solver nhận biết xe đã rời màn hình.
+                    progress++;
                 }
+
                 break;
             }
 
-            if (cells[next.x, next.y] == CellState.Vehicle)
-                break;
-
+            // Đường đã được kiểm tra thông thoáng nên tiếp tục tiến.
             cur = next;
-            moved = true;
-            cellsMoved++;
-
-            TryBoardPassengers(v, cur);
+            progress++;
         }
 
         v.position = cur;
 
+        // Nếu chưa đủ người, xe vẫn ở vị trí cuối cùng trong grid.
         if (v.isActive)
         {
             foreach (var c in GetOccupiedCells(v))
-                if (InBounds(c)) cells[c.x, c.y] = CellState.Vehicle;
+            {
+                if (InBounds(c))
+                    cells[c.x, c.y] = CellState.Vehicle;
+            }
         }
 
-        return moved;
+        return progress > 0;
     }
 
-    private void TryBoardPassengers(VehicleState v, Vector3Int cell)
+    private int TryBoardPassengers(VehicleState v, Vector3Int cell)
     {
-        if (!personMap.TryGetValue(cell, out var groups)) return;
+        if (!personMap.TryGetValue(cell, out var groups))
+            return 0;
+
+        int totalBoarded = 0;
 
         for (int i = groups.Count - 1; i >= 0; i--)
         {
-            if (v.currentOccupied >= v.capacity) break;
+            if (v.currentOccupied >= v.capacity)
+                break;
 
-            int canTake = Mathf.Min(groups[i].Count, v.capacity - v.currentOccupied);
+            // Không nhận người thuộc xe khác.
+            if (groups[i].ownerVehicleId != v.id)
+                continue;
+
+            int canTake = Mathf.Min(
+                groups[i].Count,
+                v.capacity - v.currentOccupied
+            );
+
             v.currentOccupied += canTake;
             groups[i].Count -= canTake;
-            if (groups[i].Count <= 0) groups.RemoveAt(i);
+            totalBoarded += canTake;
+
+            if (groups[i].Count <= 0)
+                groups.RemoveAt(i);
         }
+
+        if (groups.Count == 0)
+            personMap.Remove(cell);
+
+        return totalBoarded;
     }
 
     public bool IsCleared() => vehicles.All(v => !v.isActive);
